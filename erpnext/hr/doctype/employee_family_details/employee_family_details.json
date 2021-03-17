@@ -1,0 +1,124 @@
+{
+ "creation": "2016-05-11 15:04:18.983031",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "relationship",
+  "full_name",
+  "gender",
+  "date_of_birth",
+  "c_brake",
+  "cid_no",
+  "district_name",
+  "city_name",
+  "village_name",
+  "column_break_10",
+  "f_remarks",
+  "cid_attach",
+  "sws_received",
+  "dead"
+ ],
+ "fields": [
+  {
+   "fieldname": "relationship",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Relationship",
+   "options": "\nSelf\nSpouse\nFather\nMother\nChildren\nFather-in-law\nMother-in-law\nBrother\nSister",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Gender",
+   "options": "Gender",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date of Birth",
+   "reqd": 1
+  },
+  {
+   "fieldname": "c_brake",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cid_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CID No./Passport /Work Permit"
+  },
+  {
+   "fieldname": "district_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "District/Dzongkhag",
+   "options": "Dzongkhag"
+  },
+  {
+   "fieldname": "city_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "City/Gewog",
+   "options": "Gewog"
+  },
+  {
+   "fieldname": "village_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Village",
+   "options": "Village"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "f_remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "cid_attach",
+   "fieldtype": "Attach",
+   "label": "CID"
+  },
+  {
+   "default": "0",
+   "fieldname": "sws_received",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "SWS Received"
+  },
+  {
+   "default": "0",
+   "fieldname": "dead",
+   "fieldtype": "Check",
+   "label": "Dead",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-03-11 16:19:27.225071",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Employee Family Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "search_fields": "cid_no, full_name",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

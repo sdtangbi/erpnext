@@ -1,5 +1,4 @@
 {
- "actions": [],
  "creation": "2013-08-02 13:45:23",
  "doctype": "DocType",
  "document_type": "Other",
@@ -27,8 +26,37 @@
   "leave_approver_mandatory_in_leave_application",
   "show_leaves_of_all_department_members_in_calendar",
   "auto_leave_encashment",
+  "sb_encashment_settings",
+  "encashment_approval_notification_template",
+  "encashment_status_notification_template",
+  "sb_advance_settings",
+  "advance_approval_notification_template",
+  "advance_status_notification_template",
+  "overtime_settings_section",
+  "overtime_approval_notification_template",
+  "overtime_status_notification_template",
+  "column_break_31",
+  "overtime_limit_type",
+  "overtime_limit",
   "hiring_settings",
-  "check_vacancies"
+  "check_vacancies",
+  "sb_travel_settings",
+  "authorization_approval_notification_template",
+  "authorization_status_notification_template",
+  "column_break_25",
+  "claim_approval_notification_template",
+  "claim_status_notification_template",
+  "return_day_dsa",
+  "sb_dsa_limit",
+  "max_days_incountry",
+  "incountry",
+  "column_break_20",
+  "max_days_outcountry",
+  "outcountry",
+  "sb_hr_approver",
+  "hr_approver",
+  "column_break_14",
+  "hr_approver_name"
  ],
  "fields": [
   {
@@ -40,6 +68,7 @@
    "description": "Enter retirement age in years",
    "fieldname": "retirement_age",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Retirement Age"
   },
   {
@@ -65,6 +94,7 @@
    "default": "1",
    "fieldname": "expense_approver_mandatory_in_expense_claim",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Expense Approver Mandatory In Expense Claim"
   },
   {
@@ -93,6 +123,7 @@
    "description": "Emails salary slip to employee based on preferred email selected in Employee",
    "fieldname": "email_salary_slip_to_employee",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Email Salary Slip to Employee"
   },
   {
@@ -101,6 +132,7 @@
    "description": "The salary slip emailed to the employee will be password protected, the password will be generated based on the password policy.",
    "fieldname": "encrypt_salary_slips_in_emails",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Encrypt Salary Slips in Emails"
   },
   {
@@ -112,7 +144,6 @@
    "label": "Password Policy"
   },
   {
-   "collapsible": 1,
    "fieldname": "leave_settings",
    "fieldtype": "Section Break",
    "label": "Leave Settings"
@@ -137,6 +168,7 @@
    "default": "1",
    "fieldname": "leave_approver_mandatory_in_leave_application",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Leave Approver Mandatory In Leave Application"
   },
   {
@@ -146,7 +178,6 @@
    "label": "Show Leaves Of All Department Members In Calendar"
   },
   {
-   "collapsible": 1,
    "fieldname": "hiring_settings",
    "fieldtype": "Section Break",
    "label": "Hiring Settings"
@@ -169,13 +200,170 @@
    "fieldname": "disable_rounded_total",
    "fieldtype": "Check",
    "label": "Disable Rounded Total"
+  },
+  {
+   "fieldname": "sb_travel_settings",
+   "fieldtype": "Section Break",
+   "label": "TRAVEL SETTINGS"
+  },
+  {
+   "fieldname": "return_day_dsa",
+   "fieldtype": "Percent",
+   "label": "Return Day DSA Percent"
+  },
+  {
+   "fieldname": "sb_dsa_limit",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "max_days_incountry",
+   "fieldtype": "Int",
+   "label": "<b>DSA CEILING FOR IN-COUNTRY TRAVEL</b><br><br>Maximum Days/Month"
+  },
+  {
+   "description": "* The mentioned limit shall only be checked against the travel types selected below. If no travel types selected, limit shall be checked against all types.",
+   "fieldname": "incountry",
+   "fieldtype": "Table",
+   "label": "In-Country",
+   "options": "HR Settings Incountry"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "max_days_outcountry",
+   "fieldtype": "Int",
+   "label": "<b>DSA CEILING FOR OUT-COUNTRY TRAVEL</b><br><br>Maximum Days/Month"
+  },
+  {
+   "description": "* The mentioned limit shall only be checked against the travel types selected below. If no travel types selected, limit shall be checked against all types.",
+   "fieldname": "outcountry",
+   "fieldtype": "Table",
+   "label": "Out-Country",
+   "options": "HR Settings Outcountry"
+  },
+  {
+   "fieldname": "sb_hr_approver",
+   "fieldtype": "Section Break",
+   "label": "HR APPROVER"
+  },
+  {
+   "fieldname": "hr_approver",
+   "fieldtype": "Link",
+   "label": "HR Approver",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "hr_approver.employee_name",
+   "fieldname": "hr_approver_name",
+   "fieldtype": "Data",
+   "label": "HR Approver Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "encashment_approval_notification_template",
+   "fieldtype": "Link",
+   "label": "Encashment Approval Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "encashment_status_notification_template",
+   "fieldtype": "Link",
+   "label": "Encashment Status Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "sb_encashment_settings",
+   "fieldtype": "Section Break",
+   "label": "LEAVE ENCASHMENT SETTINGS"
+  },
+  {
+   "fieldname": "sb_advance_settings",
+   "fieldtype": "Section Break",
+   "label": "SALARY ADVANCE SETTINGS"
+  },
+  {
+   "fieldname": "advance_approval_notification_template",
+   "fieldtype": "Link",
+   "label": "Advance Approval Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "advance_status_notification_template",
+   "fieldtype": "Link",
+   "label": "Advance Status Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "authorization_approval_notification_template",
+   "fieldtype": "Link",
+   "label": "Authorization Approval Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "authorization_status_notification_template",
+   "fieldtype": "Link",
+   "label": "Authorization Status Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "claim_approval_notification_template",
+   "fieldtype": "Link",
+   "label": "Claim Approval Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "claim_status_notification_template",
+   "fieldtype": "Link",
+   "label": "Claim Status Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "overtime_settings_section",
+   "fieldtype": "Section Break",
+   "label": "OVERTIME SETTINGS"
+  },
+  {
+   "fieldname": "overtime_approval_notification_template",
+   "fieldtype": "Link",
+   "label": "Overtime Approval Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "overtime_status_notification_template",
+   "fieldtype": "Link",
+   "label": "Overtime Status Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overtime_limit_type",
+   "fieldtype": "Select",
+   "label": "Overtime Limit",
+   "options": "\nPer Day\nPer Month\nPer Year"
+  },
+  {
+   "fieldname": "overtime_limit",
+   "fieldtype": "Int",
+   "label": "Overtime Limit in Hours"
   }
  ],
  "icon": "fa fa-cog",
  "idx": 1,
  "issingle": 1,
- "links": [],
- "modified": "2019-12-31 14:28:32.004121",
+ "modified": "2021-01-19 16:01:25.666093",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",

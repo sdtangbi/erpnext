@@ -1,5 +1,4 @@
 {
- "actions": [],
  "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2017-10-09 14:26:29.612365",
@@ -18,7 +17,7 @@
   "column_break_11",
   "advance_amount",
   "paid_amount",
-  "pending_amount",
+  "due_advance_amount",
   "claimed_amount",
   "return_amount",
   "section_break_7",
@@ -102,6 +101,14 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:cur_frm.doc.employee",
+   "fieldname": "due_advance_amount",
+   "fieldtype": "Currency",
+   "label": "Due Advance Amount",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
    "fieldname": "claimed_amount",
    "fieldtype": "Currency",
    "label": "Claimed Amount",
@@ -161,25 +168,10 @@
    "label": "Returned Amount",
    "options": "Company:company:default_currency",
    "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "repay_unclaimed_amount_from_salary",
-   "fieldtype": "Check",
-   "label": "Repay unclaimed amount from salary"
-  },
-  {
-   "depends_on": "eval:cur_frm.doc.employee",
-   "fieldname": "pending_amount",
-   "fieldtype": "Currency",
-   "label": "Pending Amount",
-   "options": "Company:company:default_currency",
-   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2020-06-12 12:42:39.833818",
+ "modified": "2020-09-29 11:38:58.567385",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",
@@ -187,28 +179,14 @@
  "permissions": [
   {
    "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Employee",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Expense Approver",
+   "role": "Administrator",
    "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],

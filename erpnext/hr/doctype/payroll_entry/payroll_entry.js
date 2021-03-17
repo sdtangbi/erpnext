@@ -8,7 +8,9 @@ frappe.ui.form.on('Payroll Entry', {
 		if (!frm.doc.posting_date) {
 			frm.doc.posting_date = frappe.datetime.nowdate();
 		}
-		frm.toggle_reqd(['payroll_frequency'], !frm.doc.salary_slip_based_on_timesheet);
+
+		// Following line commented by SHIV on 2020/10/20 as the new code is not relevant for our purpose
+		//frm.toggle_reqd(['payroll_frequency'], !frm.doc.salary_slip_based_on_timesheet);
 
 		frm.set_query("department", function() {
 			return {
@@ -53,9 +55,12 @@ frappe.ui.form.on('Payroll Entry', {
 				if (r.docs[0].employees){
 					frm.save();
 					frm.refresh();
+					// Following code commented by SHIV on 2020/10/20
+					/*
 					if(r.docs[0].validate_attendance){
 						render_employee_attendance(frm, r.message);
 					}
+					*/
 				}
 			}
 		})
@@ -90,8 +95,10 @@ frappe.ui.form.on('Payroll Entry', {
 			},
 			callback: function(r) {
 				if (r.message && !r.message.submitted) {
-					frm.add_custom_button("Make Bank Entry", function() {
-						make_bank_entry(frm);
+					//following line is replaced with subsequent by SHIV on 2020/10/21
+					//frm.add_custom_button("Make Bank Entry", function() {
+					frm.add_custom_button("Make Accounting Entries", function() {
+						make_accounting_entry(frm);
 					}).addClass("btn-primary");
 				}
 			}
@@ -128,10 +135,13 @@ frappe.ui.form.on('Payroll Entry', {
 		});
 	},
 
+	// Disabled by SHIV on 2020/10/20
+	/*
 	payroll_frequency: function (frm) {
 		frm.trigger("set_start_end_dates");
 		frm.events.clear_employee_table(frm);
 	},
+	*/
 
 	company: function (frm) {
 		frm.events.clear_employee_table(frm);
@@ -149,6 +159,17 @@ frappe.ui.form.on('Payroll Entry', {
 		frm.events.clear_employee_table(frm);
 	},
 
+	// Version.2020.10.20 Begins, following code commented by SHIV on 2020/10/20
+	// following code added by SHIV on 2020/10/21
+	fiscal_year: function (frm) {
+		frm.events.clear_employee_table(frm);
+	},
+
+	month_name: function (frm) {
+		frm.events.clear_employee_table(frm);
+	},
+	// Code is commented as the new code is not usable for our purpose
+	/*
 	start_date: function (frm) {
 		if(!in_progress && frm.doc.start_date){
 			frm.trigger("set_end_date");
@@ -211,12 +232,14 @@ frappe.ui.form.on('Payroll Entry', {
 				},
 				doc: frm.doc,
 				freeze: true,
-				freeze_message: __('Validating Employee Attendance...')
+				freeze_message: 'Validating Employee Attendance...'
 			});
 		}else{
 			frm.fields_dict.attendance_detail_html.html("");
 		}
 	},
+	*/
+	// Ver.2020.10.20 Ends
 
 	clear_employee_table: function (frm) {
 		frm.clear_table('employees');
@@ -235,7 +258,7 @@ const submit_salary_slip = function (frm) {
 				callback: function() {frm.events.refresh(frm);},
 				doc: frm.doc,
 				freeze: true,
-				freeze_message: __('Submitting Salary Slips and creating Journal Entry...')
+				freeze_message: 'Submitting Salary Slips and creating Journal Entry...'
 			});
 		},
 		function() {
@@ -247,6 +270,26 @@ const submit_salary_slip = function (frm) {
 	);
 };
 
+// Ver.2020.10.21 Begins, by SHIV on 2020/10/21
+// following code added by SHIV on 2020/10/21
+let make_accounting_entry = function (frm) {
+	var doc = frm.doc;
+
+	return frappe.call({
+		doc: cur_frm.doc,
+		method: "make_accounting_entry",
+		callback: function() {
+			frappe.set_route(
+				'List', 'Journal Entry', {"Journal Entry Account.reference_name": frm.doc.name}
+			);
+		},
+		freeze: true,
+		freeze_message: __("Creating Payment Entries......")
+	});
+};
+
+// following code commented by SHIV on 2020/10/21
+/*
 let make_bank_entry = function (frm) {
 	var doc = frm.doc;
 	if (doc.payment_account) {
@@ -266,8 +309,11 @@ let make_bank_entry = function (frm) {
 		frm.scroll_to_field('payment_account');
 	}
 };
+*/
+// Ver.2020.10.21 Ends
 
-
+// Following code commented by SHIV on 2020/10/21
+/*
 let render_employee_attendance = function(frm, data) {
 	frm.fields_dict.attendance_detail_html.html(
 		frappe.render_template('employees_to_mark_attendance', {
@@ -275,3 +321,4 @@ let render_employee_attendance = function(frm, data) {
 		})
 	);
 }
+*/

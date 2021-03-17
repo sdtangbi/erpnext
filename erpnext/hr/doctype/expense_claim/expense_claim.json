@@ -367,8 +367,7 @@
  "icon": "fa fa-money",
  "idx": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2020-03-16 18:11:07.861985",
+ "modified": "2020-09-29 11:38:40.301719",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim",
@@ -376,8 +375,6 @@
  "owner": "harshada@webnotestech.com",
  "permissions": [
   {
-   "amend": 1,
-   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -385,47 +382,8 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "HR Manager",
+   "role": "Administrator",
    "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Employee",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Expense Approver",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "HR User",
-   "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],

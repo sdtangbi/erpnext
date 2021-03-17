@@ -22,7 +22,8 @@
   "attendance_request",
   "amended_from",
   "late_entry",
-  "early_exit"
+  "early_exit",
+  "reference_name"
  ],
  "fields": [
   {
@@ -73,7 +74,7 @@
    "no_copy": 1,
    "oldfieldname": "status",
    "oldfieldtype": "Select",
-   "options": "\nPresent\nAbsent\nOn Leave\nHalf Day",
+   "options": "\nPresent\nAbsent\nOn Leave\nHalf Day\nTour",
    "reqd": 1,
    "search_index": 1
   },
@@ -169,12 +170,18 @@
    "fieldname": "early_exit",
    "fieldtype": "Check",
    "label": "Early Exit"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reference Name"
   }
  ],
  "icon": "fa fa-ok",
  "idx": 1,
  "is_submittable": 1,
- "modified": "2020-02-19 14:25:32.945842",
+ "modified": "2020-09-29 13:10:53.535206",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Attendance",
@@ -217,6 +224,21 @@
    "read": 1,
    "report": 1,
    "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Approver",
    "share": 1,
    "submit": 1,
    "write": 1

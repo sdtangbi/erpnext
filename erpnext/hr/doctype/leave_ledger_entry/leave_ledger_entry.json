@@ -1,5 +1,4 @@
 {
- "actions": [],
  "creation": "2019-05-09 15:47:39.760406",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -23,7 +22,6 @@
   {
    "fieldname": "employee",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Employee",
    "options": "Employee"
@@ -72,11 +70,13 @@
   {
    "fieldname": "from_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "From Date"
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "To Date"
   },
   {
@@ -110,8 +110,7 @@
  ],
  "in_create": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2020-02-27 14:40:10.502605",
+ "modified": "2021-01-19 12:16:02.281893",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Ledger Entry",
@@ -174,5 +173,5 @@
  ],
  "sort_field": "modified",
  "sort_order": "ASC",
- "title_field": "employee"
+ "title_field": "employee_name"
 }

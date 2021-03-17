@@ -1,0 +1,99 @@
+{
+ "creation": "2021-02-17 17:08:45.731611",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_of_training",
+  "location_type",
+  "column_break_4",
+  "development_type",
+  "country",
+  "course_title",
+  "section_break_8",
+  "college_training_institute",
+  "start_date",
+  "column_break_11",
+  "end_date",
+  "duration"
+ ],
+ "fields": [
+  {
+   "fieldname": "type_of_training",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type of Training",
+   "options": "\nShort Term\nLong Term"
+  },
+  {
+   "fieldname": "location_type",
+   "fieldtype": "Select",
+   "label": "Location Type",
+   "options": "\nIn-Country\nOut-Country"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "development_type",
+   "fieldtype": "Data",
+   "label": "Development Type"
+  },
+  {
+   "default": "Bhutan",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "course_title",
+   "fieldtype": "Data",
+   "label": "Course Title"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Duration(Days)"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "college_training_institute",
+   "fieldtype": "Data",
+   "label": "College/Training Institute"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-02-24 16:47:36.649601",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Employee Training History",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

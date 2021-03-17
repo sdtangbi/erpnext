@@ -40,6 +40,10 @@ def get_data():
 					"type": "doctype",
 					"name": "Employee Health Insurance"
 				},
+				{
+					"type": "doctype",
+					"name": "Officiating Employee"
+				},
 			]
 		},
 		{
@@ -81,6 +85,14 @@ def get_data():
 					"name": "Monthly Attendance Sheet",
 					"doctype": "Attendance"
 				},
+				{
+					"type": "doctype",
+					"name": "Overtime Application",
+					"hide_count": True,
+					"onboard": 1,
+					"dependencies": ["Employee"]
+				}
+				
 			]
 		},
 		{
@@ -129,6 +141,10 @@ def get_data():
 					"name": "Leave Block List",
 				},
 				{
+					"type": "doctype",
+					"name": "Merge CL To EL",
+				},
+				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Employee Leave Balance",
@@ -150,12 +166,14 @@ def get_data():
 					"name": "Salary Structure",
 					"onboard": 1,
 				},
-				{
-					"type": "doctype",
-					"name": "Salary Structure Assignment",
-					"onboard": 1,
-					"dependencies": ["Salary Structure", "Employee"],
-				},
+				# Following code is commented by SHIV on 2020/09/18
+				#{
+				#	"type": "doctype",
+				#	"name": "Salary Structure Assignment",
+				#	"onboard": 1,
+				#	"dependencies": ["Salary Structure", "Employee"],
+				#},
+				
 				{
 					"type": "doctype",
 					"name": "Payroll Entry",
@@ -166,13 +184,18 @@ def get_data():
 					"name": "Salary Slip",
 					"onboard": 1,
 				},
+				# Following code is commented by SHIV on 2020/09/18
+				#{
+				#	"type": "doctype",
+				#	"name": "Payroll Period",
+				#},
+				#{
+				#	"type": "doctype",
+				#	"name": "Income Tax Slab",
+				#},
 				{
 					"type": "doctype",
-					"name": "Payroll Period",
-				},
-				{
-					"type": "doctype",
-					"name": "Income Tax Slab",
+					"name": "Salary Tax",
 				},
 				{
 					"type": "doctype",
@@ -200,6 +223,91 @@ def get_data():
 				},
 			]
 		},
+		{
+			"label": _("Salary Increment"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Increment Entry",
+					"onboard": 1,
+					"dependencies": ["Employee"]
+				},
+				{
+					"type": "doctype",
+					"name": "Salary Increment",
+					"onboard": 1,
+					"dependencies": ["Employee"]
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"label": "Salary Increment Report",
+					"name": "Salary Increment",
+					"doctype": "Salary Increment"
+				},
+			]
+		},
+		{
+			"label": _("Salary Advance"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Salary Advance",
+					"onboard": 1,
+					"dependencies": ["Employee"]
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"label": "Salary Advance Report",
+					"name": "Salary Advance Report",
+					"doctype": "Salary Advance"
+				},
+			]
+		},
+		#added by cheten on 4/3/2021
+		{
+			"label": _("MR Management"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Muster Roll Employee",
+					"onboard": 1,
+					"dependencies": ["Employee"]
+				},
+				{
+					"type": "doctype",
+					"name": "MusterRoll Application",
+					"onboard": 1,
+				},
+				{
+					"type": "doctype",
+					"name": "Upload Attendance Others",
+					"onboard": 1,
+					"label": "Upload Bulk Attendance for MR"
+				},
+				{
+					"type": "doctype",
+					"name": "Process MR Payment",
+					"onboard": 1,
+					"label": "Process Payment for MR"
+				},
+				{
+					"type": "doctype",
+					"name": "Upload Overtime Entries",
+					"label": "Upload Overtime Entries for MR",
+					"onboard": 1
+				},
+				# {
+				# 	"type": "report",
+				# 	"name": "Overtime Register",
+				# 	"label": "Overtime Register for MR",
+				# 	"onboard": 1,
+				# 	"doctype": "Overtime Application"
+				# }
+			]
+		},
+		#end
 		{
 			"label": _("Employee Tax and Benefits"),
 			"items": [
@@ -352,6 +460,21 @@ def get_data():
 			]
 		},
 		{
+			"label": _("Travel"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Travel Authorization",
+					"dependencies": ["Employee"]
+				},
+				{
+					"type": "doctype",
+					"name": "Travel Claim",
+					"dependencies": ["Employee"]
+				},
+			]
+		},
+		{
 			"label": _("Expense Claims"),
 			"items": [
 				{
@@ -363,6 +486,31 @@ def get_data():
 					"type": "doctype",
 					"name": "Employee Advance",
 					"dependencies": ["Employee"]
+				},
+			]
+		},
+		{
+			"label": _("Leadership Feedback"),
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Competency",
+				},
+				{
+					"type": "doctype",
+					"name": "Competency Detail",
+				},
+				{
+					"type": "doctype",
+					"name": "Feedback Rating",
+				},
+				{
+					"type": "doctype",
+					"name": "Feedback Recipient Settings"
+				},
+				{
+					"type": "doctype",
+					"name": "Feedback"
 				},
 			]
 		},
@@ -461,6 +609,173 @@ def get_data():
 					"name": "Department Analytics",
 					"doctype": "Employee"
 				},
+				# following added by Cheten on 3/11/2020
+				{
+                    "type": "report",
+                    "is_query_report": True,
+                    "name": "Feedback Received",
+                    "doctype": "Feedback"
+                },
+				#end
+				# following added by SHIV on 2020/09/16
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Employee Salary Structure",
+					"doctype": "Salary Structure"
+				},
+				
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Leave Encashment Report",
+                                        "label": _("Leave Encashment Report"),
+                                        "doctype": "Leave Encashment"
+                                },
+                                {
+                                        "type": "report",
+                                        "name": "Employee Information",
+                                        "doctype": "Employee"
+                                },
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Monthly Attendance Sheet",
+                                        "doctype": "Attendance"
+                                },
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Overtime Register",
+                                        "doctype": "Attendance"
+                                },
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Salary Tax Report",
+                                        "label": "RRCO Tax Slab Details",
+                                        "doctype": "Salary Tax"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Employee Due Date Report",
+                                        "doctype": "Employee"
+                                },
+				{
+                                    "type": "report",
+                                    "is_query_report": True,
+                                    "name": "Travel Report",
+                                    "doctype": "Travel Claim"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Salary Advance Report",
+                                        "doctype": "Salary Advance"
+                                }
+			]
+		},
+		{
+			"label": _("Salary Reports"),
+			"icon": "fa fa-list",
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Monthly Salary Register",
+					"doctype": "Salary Slip"
+				},
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Loan Report",
+                                        "label": _("Loan Report"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "SSS Report",
+                                        "label": _("Salary Saving Scheme Report"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "PF Report",
+                                        "label": _("PF Report"),
+                                        "doctype": "Salary Slip"
+                                },
+				{
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "GIS Report",
+                                        "label": _("GIS Report"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Tax and Health Report",
+                                        "label": _("Salary Tax & Health Contribution Report"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type": "report",
+                                        "is_query_report": True,
+                                        "name": "Earning Report",
+                                        "doctype": "Salary Slip"
+                                },
+				{
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Salary Payable Report",
+                                        "label": _("Salary Payable Report"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Other Recoveries",
+                                        "label": _("Other Recoveries"),
+                                        "doctype": "Salary Slip"
+                                },
+                                {
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Summarized Salary Report",
+                                        "label": _("Summarized Salary Report"),
+                                        "doctype": "Salary Slip",
+                                },
+				{
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Alimony Report",
+                                        "label":_("Alimony Report"),
+                                        "doctype" : "Salary Slip"
+                                },
+                                {
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "House Rent Report",
+                                        "label": _("House Rent Report"),
+                                        "doctype": "Salary Slip",
+                                },
+                                 {
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Staff Welfare Scheme",
+                                        "label": _("Staff Welfare Scheme"),
+                                        "doctype": "Salary Slip"
+                                },
+                                 {
+                                        "type" : "report",
+                                        "is_query_report": True,
+                                        "name": "Adhoc Recoveries",
+                                        "label": _("Adhoc Recoveries"),
+                                        "doctype": "Salary Slip"
+                                }
 			]
 		},
 	]

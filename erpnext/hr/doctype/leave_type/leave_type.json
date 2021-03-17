@@ -21,6 +21,10 @@
   "carry_forward_section",
   "maximum_carry_forwarded_leaves",
   "expire_carry_forwarded_leaves_after_days",
+  "sb_employment_type",
+  "check_employment_status",
+  "column_break_10",
+  "employment_status",
   "encashment",
   "allow_encashment",
   "encashment_threshold_days",
@@ -28,7 +32,11 @@
   "earned_leave",
   "is_earned_leave",
   "earned_leave_frequency",
-  "rounding"
+  "rounding",
+  "column_break_6",
+  "on_month_completion",
+  "leave_allocation_method",
+  "min_month_days"
  ],
  "fields": [
   {
@@ -172,11 +180,58 @@
    "fieldname": "maximum_carry_forwarded_leaves",
    "fieldtype": "Float",
    "label": "Maximum Carry Forwarded Leaves"
+  },
+  {
+   "depends_on": "eval:(doc.earned_leave_frequency == \"Monthly\" && doc.leave_allocation_method == \"Flat\")",
+   "fieldname": "min_month_days",
+   "fieldtype": "Int",
+   "label": "Minimum no.of Days in Service Required to Consider as Full Month"
+  },
+  {
+   "default": "Flat",
+   "depends_on": "eval:doc.earned_leave_frequency == \"Monthly\";",
+   "fieldname": "leave_allocation_method",
+   "fieldtype": "Select",
+   "label": "Leave Credits Allocation Method",
+   "options": "Prorate\nFlat"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.earned_leave_frequency == \"Monthly\"",
+   "fieldname": "on_month_completion",
+   "fieldtype": "Check",
+   "label": "Allocate Leave Credits upon Completion of the Month"
+  },
+  {
+   "fieldname": "sb_employment_type",
+   "fieldtype": "Section Break",
+   "label": "EMPLOYMENT STATUS"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.check_employment_status",
+   "fieldname": "employment_status",
+   "fieldtype": "Link",
+   "label": "Employment Status",
+   "options": "Employment Status"
+  },
+  {
+   "default": "0",
+   "fieldname": "check_employment_status",
+   "fieldtype": "Check",
+   "label": "Change Employment Status On Availing This Leave"
   }
  ],
  "icon": "fa fa-flag",
  "idx": 1,
- "modified": "2019-09-06 18:48:48.946074",
+ "modified": "2020-09-21 11:05:20.252880",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Type",

@@ -1,0 +1,43 @@
+{
+ "creation": "2016-07-04 22:53:18.611482",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "lower_limit",
+  "upper_limit",
+  "tax"
+ ],
+ "fields": [
+  {
+   "fieldname": "lower_limit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Lower Limit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "upper_limit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Upper Limit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Tax",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-09-16 16:33:47.188412",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Salary Tax Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -1,0 +1,38 @@
+{
+ "add_total_row": 1, 
+ "apply_user_permissions": 0, 
+ "creation": "2016-08-25 17:55:46.445659", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "modified": "2018-07-11 09:32:53.318150", 
+ "modified_by": "kinzang.namgyal@cdcl.bt", 
+ "module": "HR", 
+ "name": "Loan Report", 
+ "owner": "Administrator", 
+ "ref_doctype": "Salary Slip", 
+ "report_name": "Loan Report", 
+ "report_type": "Script Report", 
+ "roles": [
+  {
+   "role": "Administrator"
+  }, 
+  {
+   "role": "HR Manager"
+  }, 
+  {
+   "role": "HR User"
+  }, 
+  {
+   "role": "Accounts Manager"
+  }, 
+  {
+   "role": "Accounts User"
+  }, 
+  {
+   "role": "Auditor"
+  }
+ ]
+}

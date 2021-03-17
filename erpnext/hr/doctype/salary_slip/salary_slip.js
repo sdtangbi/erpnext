@@ -1,74 +1,65 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
+/*
+--------------------------------------------------------------------------------------------------------------------------
+Version          Author          CreatedOn          ModifiedOn          Remarks
+------------ --------------- ------------------ -------------------  -----------------------------------------------------
+1.0		  		 SSK		                        26/08/2016         Auto calculations when amount in child changed
+1.0				 SSK								30/08/2016		   Modified Auto-calculations
+1.0              SSK                                12/09/2016         Modified Auto-calculations
+--------------------------------------------------------------------------------------------------------------------------                                                                          
+*/
 
 cur_frm.add_fetch('employee', 'company', 'company');
 cur_frm.add_fetch('time_sheet', 'total_hours', 'working_hours');
 
 frappe.ui.form.on("Salary Slip", {
 	setup: function(frm) {
-		$.each(["earnings", "deductions"], function(i, table_fieldname) {
-			frm.get_field(table_fieldname).grid.editable_fields = [
-				{fieldname: 'salary_component', columns: 6},
-				{fieldname: 'amount', columns: 4}
-			];
-		});
-
+		frm.get_field('items').grid.editable_fields = [
+			{fieldname: 'salary_structure', columns: 2},
+			{fieldname: 'from_date', columns: 2},
+			{fieldname: 'to_date', columns: 2},
+			{fieldname: 'working_days', columns: 1},
+			{fieldname: 'leave_without_pay', columns: 1},
+			{fieldname: 'payment_days', columns: 1},
+		];
+		
 		frm.fields_dict["timesheets"].grid.get_field("time_sheet").get_query = function(){
 			return {
 				filters: {
 					employee: frm.doc.employee
 				}
 			}
-		};
-
-		frm.set_query("salary_component", "earnings", function() {
-			return {
-				filters: {
-					type: "earning"
-				}
-			}
-		});
-
-		frm.set_query("salary_component", "deductions", function() {
-			return {
-				filters: {
-					type: "deduction"
-				}
-			}
-		});
-
-		frm.set_query("employee", function() {
-			return{
-				query: "erpnext.controllers.queries.employee_query"
-			}
-		});
-	},
-
-	start_date: function(frm){
-		if(frm.doc.start_date){
-			frm.trigger("set_end_date");
 		}
 	},
 
-	end_date: function(frm) {
-		frm.events.get_emp_and_leave_details(frm);
-	},
-
-	set_end_date: function(frm){
-		frappe.call({
-			method: 'erpnext.hr.doctype.payroll_entry.payroll_entry.get_end_date',
-			args: {
-				frequency: frm.doc.payroll_frequency,
-				start_date: frm.doc.start_date
-			},
-			callback: function (r) {
-				if (r.message) {
-					frm.set_value('end_date', r.message.end_date);
-				}
+	onload: function(frm){
+		if((cint(frm.doc.__islocal) == 1) && !frm.doc.amended_from){
+			if(!frm.doc.month) {
+				var today=new Date();
+				var month = (today.getMonth()).toString();
+				if(month.length>1) frm.doc.month = month;
+				else frm.doc.month = '0'+month;
 			}
-		})
+			if(!frm.doc.fiscal_year) frm.doc.fiscal_year = sys_defaults['fiscal_year'];
+			refresh_many(['month', 'fiscal_year']);
+		}
 	},
-
+	
+	refresh: function(frm) {
+		frm.trigger("toggle_fields");
+		/*																													//Commented by SHIV on 2018/09/18
+		frm.fields_dict['earnings'].grid.set_column_disp("default_amount", false);
+		frm.fields_dict['deductions'].grid.set_column_disp("default_amount", false);
+		frm.fields_dict['earnings'].grid.set_column_disp("section_break_5", false);
+		frm.fields_dict['deductions'].grid.set_column_disp("section_break_5", false);
+		*/
+	},
+	
+	employee: function(frm){
+		calculate_others(frm.doc);
+	},
+	
 	company: function(frm) {
 		var company = locals[':Company'][frm.doc.company];
 		if(!frm.doc.letter_head && company.default_letter_head) {
@@ -76,91 +67,73 @@ frappe.ui.form.on("Salary Slip", {
 		}
 	},
 
-	refresh: function(frm) {
-		frm.trigger("toggle_fields")
-
-		var salary_detail_fields = ["formula", "abbr", "statistical_component", "variable_based_on_taxable_salary"];
-		cur_frm.fields_dict['earnings'].grid.set_column_disp(salary_detail_fields,false);
-		cur_frm.fields_dict['deductions'].grid.set_column_disp(salary_detail_fields,false);
-	},
-
 	salary_slip_based_on_timesheet: function(frm) {
-		frm.trigger("toggle_fields");
-		frm.events.get_emp_and_leave_details(frm);
+		frm.trigger("toggle_fields")
 	},
 
-	payroll_frequency: function(frm) {
-		frm.trigger("toggle_fields");
-		frm.set_value('end_date', '');
+	fiscal_year: function(frm){
+		calculate_others(frm.doc);
 	},
-
-	employee: function(frm) {
-		frm.events.get_emp_and_leave_details(frm);
+	
+	month: function(frm){
+		calculate_others(frm.doc);
 	},
-
-	leave_without_pay: function(frm){
-		if (frm.doc.employee && frm.doc.start_date && frm.doc.end_date) {
-			return frappe.call({
-				method: 'process_salary_based_on_leave',
-				doc: frm.doc,
-				args: {"lwp": frm.doc.leave_without_pay},
-				callback: function(r, rt) {
-					frm.refresh();
-				}
-			});
-		}
+	
+	arrear_amount: function(frm, cdt, cdn){
+		calculate_others(frm.doc);
 	},
-
+	
+	leave_encashment_amount: function(frm, cdt, cdn){
+		calculate_others(frm.doc);
+	},
+	
 	toggle_fields: function(frm) {
-		frm.toggle_display(['hourly_wages', 'timesheets'], cint(frm.doc.salary_slip_based_on_timesheet)===1);
-
-		frm.toggle_display(['payment_days', 'total_working_days', 'leave_without_pay'],
-			frm.doc.payroll_frequency!="");
-	},
-
-	get_emp_and_leave_details: function(frm) {
-		return frappe.call({
-			method: 'get_emp_and_leave_details',
-			doc: frm.doc,
-			callback: function(r, rt) {
-				frm.refresh();
-			}
-		});
+		frm.toggle_display(['start_date', 'end_date', 'hourly_wages', 'timesheets'],
+			cint(frm.doc.salary_slip_based_on_timesheet)==1);
+		/* 																											//Commented by SHIV on 2018/09/18
+		frm.toggle_display(['fiscal_year', 'month', 'total_days_in_month', 'leave_without_pay', 'payment_days'],
+			cint(frm.doc.salary_slip_based_on_timesheet)==0);
+		*/
 	}
 })
 
-frappe.ui.form.on('Salary Slip Timesheet', {
-	time_sheet: function(frm, dt, dn) {
-		total_work_hours(frm, dt, dn);
+frappe.ui.form.on('Salary Detail', {
+	amount: function(frm, cdt, cdn){
+		calculate_others(frm.doc);
 	},
-	timesheets_remove: function(frm, dt, dn) {
-		total_work_hours(frm, dt, dn);
+	
+	depends_on_lwp: function(frm, cdt, cdn){
+		calculate_others(frm.doc);
+	},
+	
+	earnings_remove: function(doc,dt,dn) {
+		calculate_others(cur_frm.doc);		
+	}, 
+	
+	deductions_remove: function(doc,dt,dn) {
+		calculate_others(cur_frm.doc);
 	}
-});
+})
 
-// calculate total working hours, earnings based on hourly wages and totals
-var total_work_hours = function(frm, dt, dn) {
-	var total_working_hours = 0.0;
-	$.each(frm.doc["timesheets"] || [], function(i, timesheet) {
-		total_working_hours += timesheet.working_hours;
-	});
-	frm.set_value('total_working_hours', total_working_hours);
+frappe.ui.form.on("Salary Slip Timesheet", {
+	time_sheet: function(frm, cdt, cdn) {
+		doc = frm.doc;
+		cur_frm.cscript.fiscal_year(doc, cdt, cdn)
+	}
+})
 
-	var wages_amount = frm.doc.total_working_hours * frm.doc.hour_rate;
+cur_frm.fields_dict.employee.get_query = function(doc,cdt,cdn) {
+	return{
+		query: "erpnext.controllers.queries.employee_query"
+	}
+}
 
-	frappe.db.get_value('Salary Structure', {'name': frm.doc.salary_structure}, 'salary_component', (r) => {
-		var gross_pay = 0.0;
-		$.each(frm.doc["earnings"], function(i, earning) {
-			if (earning.salary_component == r.salary_component) {
-				earning.amount = wages_amount;
-				frm.refresh_fields('earnings');
-			}
-			gross_pay += earning.amount;
+// Added by SHIV on 2018/09/18
+var calculate_others = function(doc){
+	if (doc.employee){
+		cur_frm.call({
+			method: "get_emp_and_leave_details",
+			doc: doc
 		});
-		frm.set_value('gross_pay', gross_pay);
-
-		frm.doc.net_pay = flt(frm.doc.gross_pay) - flt(frm.doc.total_deduction);
-		frm.doc.rounded_total = Math.round(frm.doc.net_pay);
-		refresh_many(['net_pay', 'rounded_total']);
-	});
+	}
 }

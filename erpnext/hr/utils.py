@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import frappe, erpnext
 from frappe import _
 from frappe.utils import formatdate, format_datetime, getdate, get_datetime, nowdate, flt, cstr, add_days, today
+from frappe.utils import add_months, get_first_day, get_last_day, date_diff, cint
 from frappe.model.document import Document
 from frappe.desk.form import assign_to
 from erpnext.hr.doctype.employee.employee import get_holiday_list_for_employee
@@ -297,6 +298,91 @@ def generate_leave_encashment():
 		}, fields=['employee', 'leave_period', 'leave_type', 'to_date', 'total_leaves_allocated', 'new_leaves_allocated'])
 
 		create_leave_encashment(leave_allocation=leave_allocation)
+
+''' Ver.20200908 BEGINS, following code added by SHIV '''
+# Ver.20200908 following line replaced by subsequent
+#def allocate_earned_leaves():
+def allocate_earned_leaves_custom(today=None):
+	'''Allocate earned leaves to Employees'''
+	# Ver.20200909, on_month_completion, leave_allocation_method, min_month_days introduced by SHIV on 2020/09/09 
+	e_leave_types = frappe.get_all("Leave Type",
+		fields=["name", "max_leaves_allowed", "earned_leave_frequency", "rounding",
+			"on_month_completion", "leave_allocation_method", "min_month_days"],
+		filters={'is_earned_leave' : 1})
+
+	# Ver.20200908 following line is replaced by the next by SHIV on 2020/09/10
+	#today = getdate()
+	today = today if today else getdate()
+
+	divide_by_frequency = {"Yearly": 1, "Half-Yearly": 6, "Quarterly": 4, "Monthly": 12}
+
+	for e_leave_type in e_leave_types:
+		# Ver.20200910 following if condition added by SHIV on 2020/09/10
+		if cint(e_leave_type.on_month_completion):
+			today = get_first_day(today)
+
+		leave_allocations = frappe.db.sql("""select name, employee, from_date, to_date from `tabLeave Allocation` where %s
+			between from_date and to_date and docstatus=1 and leave_type=%s""", (today, e_leave_type.name), as_dict=1)
+		for allocation in leave_allocations:
+			leave_policy = get_employee_leave_policy(allocation.employee)
+			if not leave_policy:
+				continue
+			if not e_leave_type.earned_leave_frequency == "Monthly":
+				if not check_frequency_hit(allocation.from_date, today, e_leave_type.earned_leave_frequency):
+					continue
+			annual_allocation = frappe.db.get_value("Leave Policy Detail", filters={
+				'parent': leave_policy.name,
+				'leave_type': e_leave_type.name
+			}, fieldname=['annual_allocation'])
+			if annual_allocation:
+				earned_leaves = flt(annual_allocation) / divide_by_frequency[e_leave_type.earned_leave_frequency]
+				if e_leave_type.rounding == "0.5":
+					earned_leaves = round(earned_leaves * 2) / 2
+				else:
+					earned_leaves = round(earned_leaves)
+
+				# Ver.20200908 following if condition added by SHIV on 2020/09/09
+				# allocate only after month completion 
+				if e_leave_type.earned_leave_frequency == "Monthly":
+					date_of_joining = frappe.db.get_value("Employee", allocation.employee, "date_of_joining")
+					noof_days_in_service = 0
+					noof_days_in_month   = 0
+
+					if cint(e_leave_type.on_month_completion):
+						noof_days_in_month   = date_diff(get_last_day(add_months(today,-1)), get_first_day(add_months(today,-1))) + 1
+						noof_days_in_service = date_diff(get_last_day(add_months(today,-1)), date_of_joining) + 1
+					else:
+						noof_days_in_month   = date_diff(get_last_day(today), get_first_day(today)) + 1
+						noof_days_in_service = date_diff(get_last_day(today), date_of_joining) + 1
+
+					if e_leave_type.leave_allocation_method == "Prorate":
+						if cint(noof_days_in_service) <= 0:
+							continue
+						elif cint(noof_days_in_service) <= cint(noof_days_in_month):
+							earned_leaves = (flt(earned_leaves)/cint(noof_days_in_month))*cint(noof_days_in_service)
+					else:
+						if cint(e_leave_type.min_month_days) > 0 and cint(noof_days_in_service) < cint(e_leave_type.min_month_days):
+							continue
+							
+				# Ver.20200908 following if condition added by SHIV on 2020/09/09
+				# do not allow multiple ledger entries for same period
+				'''
+				if frappe.db.exists("Leave Ledger Entry", {"employee": allocation.employee, "leave_type": e_leave_type.name, 
+					"from_date": today, "to_date": allocation.to_date}):
+					continue
+				'''
+
+				allocation = frappe.get_doc('Leave Allocation', allocation.name)
+				new_allocation = flt(allocation.total_leaves_allocated) + flt(earned_leaves)
+
+				if new_allocation > e_leave_type.max_leaves_allowed and e_leave_type.max_leaves_allowed > 0:
+					new_allocation = e_leave_type.max_leaves_allowed
+
+				if new_allocation == allocation.total_leaves_allocated:
+					continue
+				allocation.db_set("total_leaves_allocated", new_allocation, update_modified=False)
+				create_additional_leave_ledger_entry(allocation, earned_leaves, today)
+''' Ver.20200908 ENDS '''
 
 def allocate_earned_leaves():
 	'''Allocate earned leaves to Employees'''

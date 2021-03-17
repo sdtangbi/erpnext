@@ -1,0 +1,77 @@
+{
+ "creation": "2020-01-09 15:04:55.849615",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "leaves_allocated",
+  "cb01",
+  "leaves_taken",
+  "leave_balance",
+  "leave_ledger_entry"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Name",
+   "options": "employee.employee_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "leaves_allocated",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Leaves Allocated",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leaves_taken",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Leaves Taken",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leave_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Leave Balance",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leave_ledger_entry",
+   "fieldtype": "Link",
+   "label": "Leave Ledger Entry",
+   "no_copy": 1,
+   "options": "Leave Ledger Entry",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-01-08 16:23:55.518061",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Carry Forward Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

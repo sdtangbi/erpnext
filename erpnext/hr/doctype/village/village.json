@@ -1,0 +1,57 @@
+{
+ "autoname": "format:{village}-{gewog}",
+ "creation": "2020-09-11 10:02:16.990116",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "dzongkhag",
+  "gewog",
+  "village"
+ ],
+ "fields": [
+  {
+   "fieldname": "dzongkhag",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Dzongkhag",
+   "options": "Dzongkhag",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gewog",
+   "fieldtype": "Link",
+   "label": "Gewog",
+   "options": "Gewog",
+   "reqd": 1
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Data",
+   "label": "Village"
+  }
+ ],
+ "modified": "2020-11-18 10:46:50.845043",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Village",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

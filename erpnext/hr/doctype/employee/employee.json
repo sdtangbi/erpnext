@@ -2,7 +2,7 @@
  "allow_events_in_timeline": 1,
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "naming_series:",
+ "autoname": "format:EMP.####",
  "creation": "2013-03-07 09:04:18",
  "doctype": "DocType",
  "document_type": "Setup",
@@ -16,16 +16,38 @@
   "first_name",
   "middle_name",
   "last_name",
+  "gender",
   "employee_name",
   "image",
   "column_break1",
   "company",
   "status",
   "employee_number",
-  "employment_type",
-  "gender",
   "date_of_birth",
   "date_of_joining",
+  "old_employee_id",
+  "sb_employment_details",
+  "employment_type",
+  "employee_group",
+  "grade",
+  "designation",
+  "pms_group",
+  "column_break_53",
+  "employment_status",
+  "date_of_retirement",
+  "increment_cycle",
+  "promotion_cycle",
+  "promotion_due_date",
+  "job_profile",
+  "department",
+  "division",
+  "section",
+  "reports_to",
+  "reports_to_name",
+  "column_break_31",
+  "branch",
+  "cost_center",
+  "business_activity",
   "emergency_contact_details",
   "emergency_phone_number",
   "person_to_be_contacted",
@@ -41,14 +63,6 @@
   "col_break_22",
   "contract_end_date",
   "notice_number_of_days",
-  "date_of_retirement",
-  "job_profile",
-  "department",
-  "designation",
-  "reports_to",
-  "column_break_31",
-  "grade",
-  "branch",
   "attendance_and_leave_details",
   "leave_policy",
   "attendance_device_id",
@@ -56,10 +70,19 @@
   "holiday_list",
   "default_shift",
   "leave_approver",
+  "casual_leave_allocated",
   "salary_information",
   "salary_mode",
   "bank_name",
   "bank_ac_no",
+  "column_break_50",
+  "tpn_number",
+  "nppf_number",
+  "nppf_tiers",
+  "gis_number",
+  "gis_policy_number",
+  "sb_family_details",
+  "employee_family_details",
   "health_insurance_section",
   "health_insurance_provider",
   "health_insurance_no",
@@ -82,13 +105,22 @@
   "date_of_issue",
   "valid_upto",
   "place_of_issue",
+  "country",
+  "dzongkhag",
+  "gewog",
+  "village",
   "column_break6",
+  "house_number",
+  "thram_number",
+  "plot_number",
   "marital_status",
   "blood_group",
   "family_background",
   "health_details",
   "educational_qualification",
   "education",
+  "employee_training_history_section",
+  "employee_training_history",
   "previous_work_experience",
   "external_work_history",
   "history_in_company",
@@ -106,7 +138,8 @@
   "feedback",
   "lft",
   "rgt",
-  "old_parent"
+  "old_parent",
+  "date_of_transfer"
  ],
  "fields": [
   {
@@ -124,14 +157,14 @@
    "report_hide": 1
   },
   {
+   "default": "EMP.####",
    "fieldname": "naming_series",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
+   "hidden": 1,
    "label": "Series",
    "no_copy": 1,
    "oldfieldname": "naming_series",
-   "oldfieldtype": "Select",
-   "options": "HR-EMP-",
-   "set_only_once": 1
+   "oldfieldtype": "Select"
   },
   {
    "fieldname": "salutation",
@@ -220,7 +253,8 @@
    "label": "Employment Type",
    "oldfieldname": "employment_type",
    "oldfieldtype": "Link",
-   "options": "Employment Type"
+   "options": "Employment Type",
+   "reqd": 1
   },
   {
    "fieldname": "gender",
@@ -232,7 +266,6 @@
    "reqd": 1
   },
   {
-   "description": "You can enter any date manually",
    "fieldname": "date_of_birth",
    "fieldtype": "Date",
    "label": "Date of Birth",
@@ -243,6 +276,7 @@
   {
    "fieldname": "date_of_joining",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Date of Joining",
    "oldfieldname": "date_of_joining",
    "oldfieldtype": "Date",
@@ -350,13 +384,13 @@
    "fieldtype": "Date",
    "label": "Date Of Retirement",
    "oldfieldname": "date_of_retirement",
-   "oldfieldtype": "Date"
+   "oldfieldtype": "Date",
+   "read_only": 1
   },
   {
-   "collapsible": 1,
    "fieldname": "job_profile",
    "fieldtype": "Section Break",
-   "label": "Department and Grade"
+   "label": "DEPARTMENT DETAILS"
   },
   {
    "fieldname": "department",
@@ -365,7 +399,8 @@
    "label": "Department",
    "oldfieldname": "department",
    "oldfieldtype": "Link",
-   "options": "Department"
+   "options": "Department",
+   "reqd": 1
   },
   {
    "fieldname": "designation",
@@ -376,6 +411,7 @@
    "oldfieldname": "designation",
    "oldfieldtype": "Link",
    "options": "Designation",
+   "reqd": 1,
    "search_index": 1
   },
   {
@@ -385,7 +421,8 @@
    "label": "Reports to",
    "oldfieldname": "reports_to",
    "oldfieldtype": "Link",
-   "options": "Employee"
+   "options": "Employee",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_31",
@@ -395,15 +432,18 @@
    "fieldname": "grade",
    "fieldtype": "Link",
    "label": "Grade",
-   "options": "Employee Grade"
+   "options": "Employee Grade",
+   "reqd": 1
   },
   {
    "fieldname": "branch",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Branch",
    "oldfieldname": "branch",
    "oldfieldtype": "Link",
-   "options": "Branch"
+   "options": "Branch",
+   "reqd": 1
   },
   {
    "fieldname": "leave_policy",
@@ -422,7 +462,6 @@
    "options": "Holiday List"
   },
   {
-   "collapsible": 1,
    "fieldname": "salary_information",
    "fieldtype": "Section Break",
    "label": "Salary Details",
@@ -556,7 +595,6 @@
    "label": "Bio / Cover Letter"
   },
   {
-   "collapsible": 1,
    "fieldname": "personal_details",
    "fieldtype": "Section Break",
    "label": "Personal Details"
@@ -564,7 +602,7 @@
   {
    "fieldname": "passport_number",
    "fieldtype": "Data",
-   "label": "Passport Number"
+   "label": "Passport Number/ CID/ Work Permit"
   },
   {
    "fieldname": "date_of_issue",
@@ -636,7 +674,6 @@
    "options": "Employee External Work History"
   },
   {
-   "collapsible": 1,
    "fieldname": "history_in_company",
    "fieldtype": "Section Break",
    "label": "History In Company",
@@ -757,7 +794,6 @@
    "unique": 1
   },
   {
-   "collapsible": 1,
    "fieldname": "attendance_and_leave_details",
    "fieldtype": "Section Break",
    "label": "Attendance and Leave Details"
@@ -775,14 +811,208 @@
   {
    "fieldname": "leave_approver",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Leave Approver",
    "options": "User"
+  },
+  {
+   "fieldname": "division",
+   "fieldtype": "Link",
+   "label": "Division",
+   "options": "Division",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "Section"
+  },
+  {
+   "fieldname": "old_employee_id",
+   "fieldtype": "Data",
+   "label": "Old Employee ID"
+  },
+  {
+   "fieldname": "column_break_50",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tpn_number",
+   "fieldtype": "Data",
+   "label": "TPN Number"
+  },
+  {
+   "fieldname": "nppf_number",
+   "fieldtype": "Data",
+   "label": "NPPF Number"
+  },
+  {
+   "fieldname": "nppf_tiers",
+   "fieldtype": "Select",
+   "label": "NPPF Tiers",
+   "options": "\n1\n2"
+  },
+  {
+   "fieldname": "gis_number",
+   "fieldtype": "Data",
+   "label": "GIS Number"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "dzongkhag",
+   "fieldtype": "Link",
+   "label": "Dzongkhag",
+   "options": "Dzongkhag"
+  },
+  {
+   "fieldname": "gewog",
+   "fieldtype": "Link",
+   "label": "Gewog",
+   "options": "Gewog"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Link",
+   "label": "Village",
+   "options": "Village"
+  },
+  {
+   "fieldname": "house_number",
+   "fieldtype": "Data",
+   "label": "House Number"
+  },
+  {
+   "fieldname": "thram_number",
+   "fieldtype": "Data",
+   "label": "Thram Number"
+  },
+  {
+   "fieldname": "plot_number",
+   "fieldtype": "Data",
+   "label": "Plot Number"
+  },
+  {
+   "fieldname": "sb_employment_details",
+   "fieldtype": "Section Break",
+   "label": "EMPLOYMENT DETAILS"
+  },
+  {
+   "fieldname": "employee_group",
+   "fieldtype": "Link",
+   "label": "Employee Group",
+   "options": "Employee Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_53",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "increment_cycle",
+   "fieldtype": "Select",
+   "label": "Increment Cycle",
+   "options": "\nJanuary\nJuly"
+  },
+  {
+   "fieldname": "promotion_cycle",
+   "fieldtype": "Select",
+   "label": "Promotion Cycle",
+   "options": "\nJanuary\nJuly"
+  },
+  {
+   "fieldname": "employment_status",
+   "fieldtype": "Link",
+   "label": "Employment Status",
+   "options": "Employment Status",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "branch.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "business_activity",
+   "fieldtype": "Link",
+   "label": "Business Activity",
+   "options": "Business Activity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "promotion_due_date",
+   "fieldtype": "Date",
+   "label": "Promotion Due Date"
+  },
+  {
+   "fieldname": "gis_policy_number",
+   "fieldtype": "Data",
+   "label": "GIS Policy Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_family_details",
+   "fieldtype": "Section Break",
+   "label": "FAMILY DETAILS"
+  },
+  {
+   "fieldname": "employee_family_details",
+   "fieldtype": "Table",
+   "options": "Employee Family Details"
+  },
+  {
+   "fieldname": "date_of_transfer",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Date Of Transfer"
+  },
+  {
+   "default": "0",
+   "fieldname": "casual_leave_allocated",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Casual Leave Allocation On Employee Creation",
+   "no_copy": 1
+  },
+  {
+   "fetch_from": "reports_to.employee_name",
+   "fieldname": "reports_to_name",
+   "fieldtype": "Data",
+   "label": "Reports to Name",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "employee_training_history_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Training History"
+  },
+  {
+   "fieldname": "employee_training_history",
+   "fieldtype": "Table",
+   "options": "Employee Training History"
+  },
+  {
+   "bold": 1,
+   "fieldname": "pms_group",
+   "fieldtype": "Link",
+   "label": "PMS Group",
+   "options": "PMS Group"
   }
  ],
  "icon": "fa fa-user",
  "idx": 24,
  "image_field": "image",
- "modified": "2020-01-09 04:23:55.611366",
+ "modified": "2021-03-11 16:14:00.650642",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee",
@@ -824,8 +1054,7 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
- "search_fields": "employee_name",
+ "search_fields": "employee_name, designation, branch",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

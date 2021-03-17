@@ -4,12 +4,20 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
-from frappe.utils import flt, add_days
+from frappe.utils import flt
 from erpnext.hr.doctype.leave_application.leave_application \
 	import get_leave_balance_on, get_leaves_for_period
 
 def execute(filters=None):
-	leave_types = frappe.db.sql_list("select name from `tabLeave Type` order by name asc")
+	leave_types = frappe.db.sql_list("""select lt.name from `tabLeave Type` lt 
+			where exists(select 1
+					from `tabLeave Ledger Entry` la
+					where la.leave_type = lt.name
+					and la.from_date <= '{to_date}'
+					and la.to_date >= '{from_date}')
+			order by name asc""".format(
+				from_date = filters.get("from_date"), 
+				to_date = filters.get("to_date")))
 
 	columns = get_columns(leave_types)
 	data = get_data(filters, leave_types)
@@ -26,8 +34,8 @@ def get_columns(leave_types):
 	for leave_type in leave_types:
 		columns.append(_(leave_type) + " " + _("Opening") + ":Float:160")
 		columns.append(_(leave_type) + " " + _("Allocated") + ":Float:160")
-		columns.append(_(leave_type) + " " + _("Taken") + ":Float:160")
 		columns.append(_(leave_type) + " " + _("Expired") + ":Float:160")
+		columns.append(_(leave_type) + " " + _("Taken") + ":Float:160")
 		columns.append(_(leave_type) + " " + _("Balance") + ":Float:160")
 
 	return columns
@@ -49,7 +57,7 @@ def get_data(filters, leave_types):
 	conditions = get_conditions(filters)
 
 	if filters.to_date <= filters.from_date:
-		frappe.throw(_("'From Date should be less than To Date"))
+		frappe.throw(_("From date can not be greater than than To date"))
 
 	active_employees = frappe.get_all("Employee",
 		filters=conditions,
@@ -84,7 +92,7 @@ def calculate_leaves_details(filters, leave_type, employee):
 	# removing expired leaves
 	leaves_taken = leaves_deducted - remove_expired_leave(ledger_entries)
 
-	opening = get_leave_balance_on(employee.name, leave_type, add_days(filters.from_date, -1))
+	opening = get_leave_balance_on(employee.name, leave_type, filters.from_date)
 
 	new_allocation , expired_allocation = get_allocated_and_expired_leaves(ledger_entries, filters.from_date, filters.to_date)
 
@@ -94,7 +102,7 @@ def calculate_leaves_details(filters, leave_type, employee):
 	#Formula for calculating  closing balance
 	closing = max(opening + new_allocation - (leaves_taken + expired_leaves), 0)
 
-	return [opening, new_allocation, leaves_taken, expired_leaves, closing]
+	return [opening, new_allocation, expired_leaves, leaves_taken, closing]
 
 
 def remove_expired_leave(records):
@@ -113,7 +121,7 @@ def get_allocated_and_expired_leaves(records, from_date, to_date):
 	expired_leaves = 0
 
 	for record in records:
-		if record.to_date < getdate(to_date) and record.leaves>0:
+		if record.to_date <= getdate(to_date) and record.leaves>0:
 			expired_leaves += record.leaves
 
 		if record.from_date >= getdate(from_date) and record.leaves>0:

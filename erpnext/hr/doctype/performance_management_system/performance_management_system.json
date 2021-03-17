@@ -1,0 +1,141 @@
+{
+ "autoname": "PMS.#####",
+ "creation": "2021-02-09 15:14:10.858979",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "performance_management_planning_section",
+  "employee",
+  "emp_name",
+  "department",
+  "column_break_4",
+  "designation",
+  "branch",
+  "identified_performance_targets",
+  "performance_target",
+  "part_b_identified_core_competency_section",
+  "core_competency",
+  "performance_review_section",
+  "performance_evaluation_section",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "performance_management_planning_section",
+   "fieldtype": "Section Break",
+   "label": "Performance Management Planning"
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "emp_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Emp Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Designation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.branch",
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "identified_performance_targets",
+   "fieldtype": "Section Break",
+   "label": "Part A: Identified Performance Targets till the end of the year"
+  },
+  {
+   "fieldname": "part_b_identified_core_competency_section",
+   "fieldtype": "Section Break",
+   "label": "Part B: Identified Core Competency "
+  },
+  {
+   "fieldname": "performance_review_section",
+   "fieldtype": "Section Break",
+   "label": "Performance Review"
+  },
+  {
+   "fieldname": "performance_evaluation_section",
+   "fieldtype": "Section Break",
+   "label": "Performance Evaluation"
+  },
+  {
+   "fieldname": "performance_target",
+   "fieldtype": "Table",
+   "label": "Performance Target",
+   "options": "Identified Performance Target"
+  },
+  {
+   "fieldname": "core_competency",
+   "fieldtype": "Table",
+   "label": "Core Competency",
+   "options": "Identified Core Competency"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Performance Management System",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "EMP ID",
+   "options": "Employee"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2021-02-10 10:19:57.879301",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Performance Management System",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "employee",
+ "track_changes": 1
+}

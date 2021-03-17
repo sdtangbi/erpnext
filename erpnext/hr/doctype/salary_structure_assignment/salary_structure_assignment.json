@@ -1,5 +1,4 @@
 {
- "actions": [],
  "allow_import": 1,
  "autoname": "HR-SSA-.YY.-.MM.-.#####",
  "creation": "2018-04-13 16:38:41.769237",
@@ -123,8 +122,7 @@
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2020-04-25 18:24:23.617088",
+ "modified": "2020-09-18 13:00:42.674202",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Salary Structure Assignment",
@@ -138,35 +136,8 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "System Manager",
+   "role": "Administrator",
    "share": 1,
-   "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "HR Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "HR User",
-   "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],

@@ -1,0 +1,88 @@
+{
+ "creation": "2021-02-10 11:43:53.353612",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_month",
+  "column_break_3",
+  "to_month",
+  "section_break_6",
+  "rate",
+  "column_break_8",
+  "sum_of_daily_product",
+  "total_interest_earned",
+  "section_break_11",
+  "total_balance_amount",
+  "total_daily_product_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_month",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "From Month "
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Rate "
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_month",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "To Month"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sum_of_daily_product",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Sum of Daily Product "
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_balance_amount",
+   "fieldtype": "Currency",
+   "label": "Total Balance Amount "
+  },
+  {
+   "fieldname": "total_daily_product_amount",
+   "fieldtype": "Currency",
+   "label": "Total Daily Product Amount"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_interest_earned",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Interest Earned"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-02-10 11:59:27.622721",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "PF Interest Calculation",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

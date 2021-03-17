@@ -1,0 +1,244 @@
+{
+ "allow_copy": 1,
+ "creation": "2012-03-27 14:35:59",
+ "doctype": "DocType",
+ "document_type": "Other",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break0",
+  "column_break0",
+  "company",
+  "branch",
+  "department",
+  "column_break1",
+  "division",
+  "designation",
+  "employee",
+  "section_break_8",
+  "send_email",
+  "salary_slip_based_on_timesheet",
+  "select_payroll_year_and_month",
+  "fiscal_year",
+  "column_break_11",
+  "month",
+  "process_payroll",
+  "column_break2",
+  "create_salary_slip",
+  "column_break3",
+  "remove_salary_slip",
+  "column_break5",
+  "submit_salary_slip",
+  "column_break4",
+  "make_bank_entry",
+  "accounts_posting",
+  "section_brak_5",
+  "progress",
+  "activity_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break0",
+   "fieldtype": "Section Break",
+   "label": "Select Employees"
+  },
+  {
+   "fieldname": "column_break0",
+   "fieldtype": "Column Break",
+   "width": "50%"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Processing Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "column_break1",
+   "fieldtype": "Column Break",
+   "width": "50%"
+  },
+  {
+   "fieldname": "division",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Division",
+   "options": "Division"
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Designation",
+   "options": "Designation"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee (If Any)",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "description": "Check if you want to send salary slip in mail to each employee while submitting salary slip",
+   "fieldname": "send_email",
+   "fieldtype": "Check",
+   "label": "Send Email"
+  },
+  {
+   "default": "0",
+   "fieldname": "salary_slip_based_on_timesheet",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Salary Slip Based on Timesheet"
+  },
+  {
+   "fieldname": "select_payroll_year_and_month",
+   "fieldtype": "Section Break",
+   "label": "Select Payroll Year and Month"
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fiscal Year",
+   "options": "Fiscal Year",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Month",
+   "options": "01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12",
+   "reqd": 1
+  },
+  {
+   "fieldname": "process_payroll",
+   "fieldtype": "Section Break",
+   "label": "Process Payroll"
+  },
+  {
+   "fieldname": "column_break2",
+   "fieldtype": "Column Break",
+   "width": "50%"
+  },
+  {
+   "description": "Creates salary slip for above mentioned criteria.",
+   "fieldname": "create_salary_slip",
+   "fieldtype": "Button",
+   "label": "Create Salary Slip"
+  },
+  {
+   "fieldname": "column_break3",
+   "fieldtype": "Column Break",
+   "width": "25%"
+  },
+  {
+   "description": "Removes unsubmitted salary slip for above mentioned criteria",
+   "fieldname": "remove_salary_slip",
+   "fieldtype": "Button",
+   "label": "Remove Salary Slip",
+   "options": "remove_sal_slip"
+  },
+  {
+   "fieldname": "column_break5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Submit all salary slips for the above selected criteria",
+   "fieldname": "submit_salary_slip",
+   "fieldtype": "Button",
+   "label": "Submit Salary Slip"
+  },
+  {
+   "fieldname": "column_break4",
+   "fieldtype": "Column Break",
+   "width": "25%"
+  },
+  {
+   "description": "Create Bank Entry for the total salary paid for the above selected criteria",
+   "fieldname": "make_bank_entry",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Make Bank Entry"
+  },
+  {
+   "description": "Create Bank Entry for the total salary paid for the above selected criteria",
+   "fieldname": "accounts_posting",
+   "fieldtype": "Button",
+   "label": "Post to Accounts"
+  },
+  {
+   "fieldname": "section_brak_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "progress",
+   "fieldtype": "Data",
+   "label": "Progress",
+   "read_only": 1
+  },
+  {
+   "fieldname": "activity_log",
+   "fieldtype": "HTML",
+   "label": "Activity Log"
+  }
+ ],
+ "hide_toolbar": 1,
+ "icon": "icon-cog",
+ "idx": 1,
+ "issingle": 1,
+ "modified": "2021-01-15 14:10:05.363116",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Process Payroll",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -11,7 +11,6 @@ class DepartmentApprover(Document):
 	pass
 
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
 def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 
 	if not filters.get("employee"):
@@ -20,7 +19,7 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 	approvers = []
 	department_details = {}
 	department_list = []
-	employee = frappe.get_value("Employee", filters.get("employee"), ["employee_name","department", "leave_approver"], as_dict=True)
+	employee = frappe.get_value("Employee", filters.get("employee"), ["department", "leave_approver"], as_dict=True)
 
 	employee_department = filters.get("department") or employee.department
 	if employee_department:
@@ -36,10 +35,8 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 
 	if filters.get("doctype") == "Leave Application":
 		parentfield = "leave_approvers"
-		field_name = "Leave Approver"
-	elif filters.get("doctype") == "Expense Claim":
+	else:
 		parentfield = "expense_approvers"
-		field_name = "Expense Approver"
 	if department_list:
 		for d in department_list:
 			approvers += frappe.db.sql("""select user.name, user.first_name, user.last_name from
@@ -48,11 +45,5 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 				and user.name like %s
 				and approver.parentfield = %s
 				and approver.approver=user.name""",(d, "%" + txt + "%", parentfield), as_list=True)
-
-	if len(approvers) == 0:
-		error_msg = _("Please set {0} for the Employee: {1}").format(field_name, frappe.bold(employee.employee_name))
-		if department_list:
-			error_msg += _(" or for Department: {0}").format(frappe.bold(employee_department))
-		frappe.throw(error_msg, title=_(field_name + " Missing"))
 
 	return set(tuple(approver) for approver in approvers)

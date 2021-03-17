@@ -1,0 +1,55 @@
+{
+ "creation": "2017-08-02 09:53:32.187047",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_date",
+  "to_date",
+  "number_of_hours",
+  "column_break_4",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "From Date/Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "To Date/Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "number_of_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Number of Hours",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-05 16:41:10.911477",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Overtime Application Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -1,0 +1,1 @@
+[2021-03-17 05:44:20,460 pyinotify ERROR] add_watch: cannot watch /home/frappe/frappe-bench/apps/erpnext/.git/refs/remotes/upstream WD=-1, Errno=No such file or directory (ENOENT)

@@ -1,0 +1,30 @@
+{
+ "creation": "2021-02-09 15:49:54.820165",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "competency"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "competency",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Competency",
+   "options": "-------Select One Option-------\nQUALITY OF WORK OUTPUT\nFINANCIAL MANAGEMENT\nHUMAN RESOURCE MANAGEMENT\nINTERPERSONAL AND EXTERNAL RELATIONSHIPS\nCUSTOMER ORIENTATION\nCOMMUNICATION\nCHANGE MANAGEMENT, PLANNING AND INNITIATIVE\nINTEGRITY/TRUST\nTEAM WORK\nTECHNICAL ORIENTATION\nMAINTENANCE ORIENTATION\nOCCUPATIONAL SAFETY\nATTENDANCE/ PUNCTUALITY\nATTITUDE\nCUSTOMER SERVICE\nACCOUNTABILITY\nMANAGEMENT EXCELLENCE\nPROBLEM SOLVING\nFLEXIBILITY"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-02-10 10:13:51.988166",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Identified Core Competency",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -20,9 +20,16 @@ erpnext.hr.EmployeeController = frappe.ui.form.Controller.extend({
 	},
 
 	date_of_birth: function() {
+		/* Ver.20200914, following code replaced by the subsequent by SHIV on 2020/09/14 */
+		/*
 		return cur_frm.call({
 			method: "get_retirement_date",
 			args: {date_of_birth: this.frm.doc.date_of_birth}
+		});
+		*/
+		return cur_frm.call({
+			method: "get_retirement_date",
+			args: {date_of_birth: this.frm.doc.date_of_birth, employee_group: this.frm.doc.employee_group}
 		});
 	},
 
@@ -34,7 +41,35 @@ erpnext.hr.EmployeeController = frappe.ui.form.Controller.extend({
 			}[this.frm.doc.salutation]);
 		}
 	},
+	/* Ver.20200914 Begins, following code added by SHIV on 2020/09/14 */
+	employment_type: function() {
+		this.frm.set_value('employee_group',"");
+		this.frm.set_query("employee_group", function(doc) {
+			return {
+				query:"erpnext.hr.doctype.employee.employee.get_employee_groups",
+				filters:{
+					employment_type: doc.employment_type
+				}
+			}
+		});
+	},
 
+	employee_group: function() {
+		/* Ver.20200914, following code commented by SHIV on 2020/09/14 */
+		/*
+		this.frm.set_value('employee_subgroup',"");
+		cur_frm.fields_dict['employee_subgroup'].get_query = function(doc, dt, dn) {
+		   return {
+				   filters:{"employee_group": doc.employee_group}
+		   }
+		}
+		*/
+		return cur_frm.call({
+			method: "get_retirement_date",
+			args: {date_of_birth: this.frm.doc.date_of_birth, employee_group: this.frm.doc.employee_group}
+		});
+	},
+	/* Ver.20200914 Ends */
 });
 frappe.ui.form.on('Employee',{
 	setup: function(frm) {

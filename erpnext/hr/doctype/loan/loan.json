@@ -1,5 +1,4 @@
 {
- "actions": [],
  "allow_import": 1,
  "autoname": "ACC-LOAN-.YYYY.-.#####",
  "creation": "2016-12-02 10:11:49.673604",
@@ -265,15 +264,13 @@
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2019-12-25 17:59:58.122823",
+ "modified": "2020-09-23 11:58:01.870833",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Loan",
  "owner": "Administrator",
  "permissions": [
   {
-   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -281,14 +278,9 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "HR Manager",
+   "role": "System Manager",
    "share": 1,
-   "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Employee"
   }
  ],
  "search_fields": "posting_date",

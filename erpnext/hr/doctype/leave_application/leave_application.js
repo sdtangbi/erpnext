@@ -6,6 +6,8 @@ cur_frm.add_fetch('employee','company','company');
 
 frappe.ui.form.on("Leave Application", {
 	setup: function(frm) {
+		// Following code commented by SHIV on 2020/09/21
+		/*
 		frm.set_query("leave_approver", function() {
 			return {
 				query: "erpnext.hr.doctype.department_approver.department_approver.get_approvers",
@@ -15,13 +17,16 @@ frappe.ui.form.on("Leave Application", {
 				}
 			};
 		});
-
+		
 		frm.set_query("employee", erpnext.queries.employee);
+		*/
 	},
 	onload: function(frm) {
 		if (!frm.doc.posting_date) {
 			frm.set_value("posting_date", frappe.datetime.get_today());
 		}
+		// Following code is commented by SHIV on 2020/09/21
+		/*
 		if (frm.doc.docstatus == 0) {
 			return frappe.call({
 				method: "erpnext.hr.doctype.leave_application.leave_application.get_mandatory_approval",
@@ -35,18 +40,38 @@ frappe.ui.form.on("Leave Application", {
 				}
 			});
 		}
+		*/
+
+		// Following code added by SHIV on 2020/09/21
+		frm.set_query("leave_approver", function() {
+			return {
+				query: "erpnext.hr.doctype.leave_application.leave_application.get_approvers",
+				filters: {
+					employee: frm.doc.employee
+				}
+			};
+		});
+
+		// Following code added by SHIV on 2020/09/21
+		frm.set_query("employee", function() {
+			return {
+				"filters": {"status": "Active"}
+			}
+		});
+
+		// Following code added by SHIV on 2020/09/21
+		if(frm.doc.__islocal) {
+			frm.trigger("get_employee_branch_costcenter");
+
+		}
 	},
 
 	validate: function(frm) {
 		frm.toggle_reqd("half_day_date", frm.doc.half_day == 1);
-		if (frm.doc.half_day == 0){
-			frm.doc.half_day_date = "";
-		}
 	},
 
 	make_dashboard: function(frm) {
 		var leave_details;
-		let lwps;
 		if (frm.doc.employee) {
 			frappe.call({
 				method: "erpnext.hr.doctype.leave_application.leave_application.get_leave_details",
@@ -62,7 +87,6 @@ frappe.ui.form.on("Leave Application", {
 					if (!r.exc && r.message['leave_approver']) {
 						frm.set_value('leave_approver', r.message['leave_approver']);
 					}
-					lwps = r.message["lwps"];
 				}
 			});
 			$("div").remove(".form-dashboard-section");
@@ -72,22 +96,11 @@ frappe.ui.form.on("Leave Application", {
 				})
 			);
 			frm.dashboard.show();
-			let allowed_leave_types =  Object.keys(leave_details);
-
-			// lwps should be allowed, lwps don't have any allocation
-			allowed_leave_types = allowed_leave_types.concat(lwps);
-
-			frm.set_query('leave_type', function(){
-				return {
-					filters : [
-						['leave_type_name', 'in', allowed_leave_types]
-					]
-				};
-			});
 		}
 	},
 
 	refresh: function(frm) {
+		//frm.trigger("make_dashboard"); // Added by SHIV
 		if (frm.is_new()) {
 			frm.trigger("calculate_total_days");
 		}
@@ -229,5 +242,13 @@ frappe.ui.form.on("Leave Application", {
 				}
 			});
 		}
-	}
+	},
+
+	// Following method added by SHIV on 2020/09/21
+	get_employee_branch_costcenter: function(frm){
+		if((frm.doc.docstatus==0 || frm.doc.__islocal) && frm.doc.employee){
+			cur_frm.add_fetch("employee", "branch", "branch");
+			cur_frm.add_fetch("employee", "cost_center", "cost_center");
+		}
+	},
 });

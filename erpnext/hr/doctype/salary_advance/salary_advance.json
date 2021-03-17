@@ -1,0 +1,412 @@
+{
+ "autoname": "SAD.YY.MM.#####",
+ "creation": "2018-11-16 16:16:35.909975",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "user_id",
+  "employee_name",
+  "designation",
+  "employment_type",
+  "employee_group",
+  "grade",
+  "column_break_5",
+  "application_date",
+  "company",
+  "branch",
+  "cost_center",
+  "business_activity",
+  "years_in_service",
+  "sb2",
+  "salary_advance_type",
+  "basic_pay",
+  "max_months_limit",
+  "column_break_17",
+  "max_advance_limit",
+  "total_claim",
+  "sb_recovery_details",
+  "deduction_month",
+  "recovery_start_date",
+  "cb12",
+  "monthly_deduction",
+  "recovery_end_date",
+  "sb1",
+  "reason",
+  "column_break_15",
+  "document",
+  "amended_from",
+  "workflow_state",
+  "sb_approver",
+  "advance_approver_name",
+  "column_break_23",
+  "advance_approver",
+  "advance_approver_designation",
+  "sb_reference",
+  "salary_structure",
+  "salary_component",
+  "column_break_18",
+  "reference",
+  "posting_date",
+  "rejection_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee User ID",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Read Only",
+   "label": "Designation"
+  },
+  {
+   "fetch_from": "employee.employment_type",
+   "fieldname": "employment_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employment Type"
+  },
+  {
+   "fetch_from": "employee.employee_group",
+   "fieldname": "employee_group",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Group"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "application_date",
+   "fieldtype": "Date",
+   "label": "Application Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "business_activity",
+   "fieldtype": "Link",
+   "label": "Business Activity",
+   "options": "Business Activity",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "years_in_service",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Years In Service"
+  },
+  {
+   "fieldname": "advance_approver",
+   "fieldtype": "Link",
+   "label": "Approver Email ID",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_approver_name",
+   "fieldtype": "Data",
+   "label": "Approver Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_approver_designation",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Approver Designation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "SALARY ADVANCE DETAILS"
+  },
+  {
+   "fieldname": "basic_pay",
+   "fieldtype": "Currency",
+   "label": "Basic Pay",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.salary_advance_type != \"Flat Amount\"",
+   "fieldname": "max_months_limit",
+   "fieldtype": "Int",
+   "label": "Max No.of Months Allowed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "max_advance_limit",
+   "fieldtype": "Currency",
+   "label": "Maximum Advance Limit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_claim",
+   "fieldtype": "Currency",
+   "label": "Advance Amount Requested",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_recovery_details",
+   "fieldtype": "Section Break",
+   "label": "RECOVERY DETAILS"
+  },
+  {
+   "default": "12",
+   "fieldname": "deduction_month",
+   "fieldtype": "Select",
+   "label": "No.of Installments",
+   "options": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "monthly_deduction",
+   "fieldtype": "Currency",
+   "label": "Monthly Deduction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "recovery_start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Recovery Start Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "recovery_end_date",
+   "fieldtype": "Date",
+   "label": "Recovery End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Attach",
+   "label": "Supporting Documents"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Salary Advance",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Workflow State",
+   "options": "Workflow State"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_reference",
+   "fieldtype": "Section Break",
+   "label": "REFERENCE"
+  },
+  {
+   "fieldname": "salary_component",
+   "fieldtype": "Link",
+   "label": "Salary Component",
+   "options": "Salary Component",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "salary_structure",
+   "fieldtype": "Link",
+   "label": "Salary Structure",
+   "options": "Salary Structure",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Rejection Reason"
+  },
+  {
+   "fetch_from": "employee.grade",
+   "fieldname": "grade",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Grade"
+  },
+  {
+   "fieldname": "salary_advance_type",
+   "fieldtype": "Data",
+   "label": "Salary Advance Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_approver",
+   "fieldtype": "Section Break",
+   "label": "APPROVER DETAILS"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-10-04 11:50:00.778506",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Salary Advance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Approver",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "employee_name",
+ "track_changes": 1
+}

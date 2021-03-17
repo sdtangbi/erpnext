@@ -1,0 +1,50 @@
+{
+ "autoname": "ECI.#####",
+ "creation": "2021-03-11 09:57:42.701212",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "evaluate_work_competency",
+  "evaluate_comp_weightage",
+  "evaluate_comp_self_rating",
+  "evaluate_comp_sup_rating"
+ ],
+ "fields": [
+  {
+   "fieldname": "evaluate_work_competency",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Work Competency"
+  },
+  {
+   "fieldname": "evaluate_comp_weightage",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Weightage"
+  },
+  {
+   "fieldname": "evaluate_comp_self_rating",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Self Rating"
+  },
+  {
+   "fieldname": "evaluate_comp_sup_rating",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Supervisor Rating"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-03-11 10:38:27.906602",
+ "modified_by": "Administrator",
+ "module": "PMS",
+ "name": "Evaluate Competency Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

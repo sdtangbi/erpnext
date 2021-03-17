@@ -1,25 +1,24 @@
 {
  "allow_copy": 1,
- "autoname": "HR-PRUN-.YYYY.-.#####",
+ "autoname": "PRUN-.{fiscal_year}.-.#####",
  "creation": "2017-10-23 15:22:29.291323",
  "doctype": "DocType",
  "document_type": "Other",
  "engine": "InnoDB",
  "field_order": [
-  "section_break0",
-  "column_break0",
-  "posting_date",
-  "payroll_frequency",
-  "column_break1",
-  "company",
+  "sb_payroll_period",
+  "fiscal_year",
+  "month_name",
+  "month",
+  "column_break_40",
+  "processing_branch",
   "section_break_8",
   "branch",
   "department",
   "column_break_10",
   "designation",
+  "employee",
   "number_of_employees",
-  "sec_break20",
-  "employees",
   "section_break_13",
   "validate_attendance",
   "attendance_detail_html",
@@ -31,6 +30,8 @@
   "column_break_11",
   "deduct_tax_for_unclaimed_employee_benefits",
   "deduct_tax_for_unsubmitted_tax_exemption_proof",
+  "sec_break20",
+  "employees",
   "accounting_dimensions_section",
   "project",
   "dimension_col_break",
@@ -41,13 +42,19 @@
   "column_break_33",
   "bank_account",
   "salary_slips_created",
-  "salary_slips_submitted"
+  "salary_slips_submitted",
+  "section_break0",
+  "column_break0",
+  "posting_date",
+  "payroll_frequency",
+  "column_break1",
+  "company"
  ],
  "fields": [
   {
    "fieldname": "section_break0",
    "fieldtype": "Section Break",
-   "label": "Select Employees"
+   "label": "ADDITIONAL INFORMATION"
   },
   {
    "fieldname": "column_break0",
@@ -65,9 +72,9 @@
    "depends_on": "eval:doc.salary_slip_based_on_timesheet == 0",
    "fieldname": "payroll_frequency",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Payroll Frequency",
-   "options": "\nMonthly\nFortnightly\nBimonthly\nWeekly\nDaily",
-   "reqd": 1
+   "options": "\nMonthly\nFortnightly\nBimonthly\nWeekly\nDaily"
   },
   {
    "fieldname": "column_break1",
@@ -77,7 +84,6 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Company",
    "options": "Company",
    "remember_last_selected_value": 1,
@@ -86,12 +92,11 @@
   {
    "fieldname": "section_break_8",
    "fieldtype": "Section Break",
-   "label": "Employees"
+   "label": "Select Employees"
   },
   {
    "fieldname": "branch",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Branch",
    "options": "Branch"
   },
@@ -114,6 +119,7 @@
   {
    "fieldname": "number_of_employees",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "Number Of Employees",
    "read_only": 1
   },
@@ -130,17 +136,20 @@
   },
   {
    "fieldname": "section_break_13",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "default": "0",
    "fieldname": "validate_attendance",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Validate Attendance"
   },
   {
    "fieldname": "attendance_detail_html",
-   "fieldtype": "HTML"
+   "fieldtype": "HTML",
+   "hidden": 1
   },
   {
    "fieldname": "section_break_12",
@@ -150,6 +159,7 @@
    "default": "0",
    "fieldname": "salary_slip_based_on_timesheet",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Salary Slip Based on Timesheet"
   },
   {
@@ -160,14 +170,14 @@
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Start Date",
-   "reqd": 1
+   "hidden": 1,
+   "label": "Start Date"
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "label": "End Date",
-   "reqd": 1
+   "hidden": 1,
+   "label": "End Date"
   },
   {
    "fieldname": "column_break_11",
@@ -177,25 +187,28 @@
    "default": "0",
    "fieldname": "deduct_tax_for_unclaimed_employee_benefits",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Deduct Tax For Unclaimed Employee Benefits"
   },
   {
    "default": "0",
    "fieldname": "deduct_tax_for_unsubmitted_tax_exemption_proof",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Deduct Tax For Unsubmitted Tax Exemption Proof"
   },
   {
    "default": ":Company",
    "fieldname": "cost_center",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Cost Center",
-   "options": "Cost Center",
-   "reqd": 1
+   "options": "Cost Center"
   },
   {
    "fieldname": "project",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Project",
    "options": "Project"
   },
@@ -210,6 +223,7 @@
    "fetch_from": "bank_account.account",
    "fieldname": "payment_account",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Payment Account",
    "options": "Account"
   },
@@ -250,29 +264,118 @@
   {
    "fieldname": "bank_account",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Bank Account",
    "options": "Bank Account"
   },
   {
    "fieldname": "column_break_33",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fiscal Year",
+   "options": "Fiscal Year",
+   "reqd": 1
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Month",
+   "options": "\n01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "month_name",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Month",
+   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_branch",
+   "fieldtype": "Link",
+   "label": "Processing Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_payroll_period",
+   "fieldtype": "Section Break",
+   "label": "Select Payroll Period"
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-cog",
  "is_submittable": 1,
- "modified": "2019-09-12 15:46:31.436381",
+ "modified": "2021-01-15 14:09:18.778487",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Payroll Entry",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
    "cancel": 1,
    "create": 1,
    "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
    "read": 1,
    "report": 1,
    "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
    "share": 1,
    "submit": 1,
    "write": 1

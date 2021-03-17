@@ -1,0 +1,96 @@
+{
+ "autoname": "field:employment_status",
+ "creation": "2019-04-11 14:49:22.706609",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employment_status",
+  "description",
+  "disallow_leave_allocation",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "employment_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employment Status",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description"
+  },
+  {
+   "fieldname": "disallow_leave_allocation",
+   "fieldtype": "Section Break",
+   "label": "DISALLOW LEAVE ALLOCATION"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Leave Allocation",
+   "options": "Employment Status Item"
+  }
+ ],
+ "modified": "2020-09-11 11:10:28.664438",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Employment Status",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Master",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

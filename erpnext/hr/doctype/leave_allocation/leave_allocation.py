@@ -64,8 +64,10 @@ class LeaveAllocation(Document):
 
 	def validate_new_leaves_allocated_value(self):
 		"""validate that leave allocation is in multiples of 0.5"""
-		if flt(self.new_leaves_allocated) % 0.5:
-			frappe.throw(_("Leaves must be allocated in multiples of 0.5"), ValueMultiplierError)
+		# Following code is commented by SHIV on 2020/09/28
+		#if flt(self.new_leaves_allocated) % 0.5:
+		#	frappe.throw(_("Leaves must be allocated in multiples of 0.5"), ValueMultiplierError)
+		pass
 
 	def validate_allocation_overlap(self):
 		leave_allocation = frappe.db.sql("""

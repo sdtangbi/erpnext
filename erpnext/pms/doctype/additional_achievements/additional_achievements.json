@@ -1,0 +1,50 @@
+{
+ "autoname": "AddAch.#####",
+ "creation": "2021-03-09 12:40:25.575418",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "additional_achievements",
+  "appraisees_remarks",
+  "appraisers_remarks",
+  "own_initiativedirected"
+ ],
+ "fields": [
+  {
+   "fieldname": "additional_achievements",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Additional Achievements"
+  },
+  {
+   "fieldname": "appraisees_remarks",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Appraisee's Remarks"
+  },
+  {
+   "fieldname": "appraisers_remarks",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Appraiser's Remarks"
+  },
+  {
+   "fieldname": "own_initiativedirected",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Own Initiative/Directed"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-03-09 12:43:32.056787",
+ "modified_by": "Administrator",
+ "module": "PMS",
+ "name": "Additional Achievements",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

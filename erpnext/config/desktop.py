@@ -71,24 +71,24 @@ def get_data():
 			"type": "module",
 			"description": "Updates, Timesheets and Activities."
 		},
-		{
-			"module_name": "CRM",
-			"category": "Modules",
-			"label": _("CRM"),
-			"color": "#EF4DB6",
-			"icon": "octicon octicon-broadcast",
-			"type": "module",
-			"description": "Sales pipeline, leads, opportunities and customers."
-		},
-		{
-			"module_name": "Support",
-			"category": "Modules",
-			"label": _("Support"),
-			"color": "#1abc9c",
-			"icon": "fa fa-check-square-o",
-			"type": "module",
-			"description": "User interactions, support issues and knowledge base."
-		},
+		#{
+		#	"module_name": "CRM",
+		#	"category": "Modules",
+		#	"label": _("CRM"),
+		#	"color": "#EF4DB6",
+		#	"icon": "octicon octicon-broadcast",
+		#	"type": "module",
+		#	"description": "Sales pipeline, leads, opportunities and customers."
+		#},
+		#{
+		#	"module_name": "Support",
+		#	"category": "Modules",
+		#	"label": _("Support"),
+		#	"color": "#1abc9c",
+		#	"icon": "fa fa-check-square-o",
+		#	"type": "module",
+		#	"description": "User interactions, support issues and knowledge base."
+		#},
 		{
 			"module_name": "HR",
 			"category": "Modules",
@@ -107,7 +107,7 @@ def get_data():
 			"type": "module",
 			"description": "Quality goals, procedures, reviews and action."
 		},
-
+		
 
 		# Category: "Domains"
 		{
@@ -208,4 +208,13 @@ def get_data():
 			'standard': 1,
 			"description": "Publish items to other ERPNext users."
 		},
+		{
+			"module_name": "PMS",
+			"category": "Modules",
+			"label": _("Performance Management System"),
+			"color": "#2ecc71",
+			"icon": "octicon octicon-home",
+			"type": "module",
+			"description": "Tenant Information, Rental Bill, Rental Payment"
+		}
 	]

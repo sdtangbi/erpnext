@@ -23,29 +23,32 @@
   "column_break1",
   "description",
   "section_break_7",
-  "leave_approver",
   "leave_approver_name",
+  "leave_approver_designation",
   "column_break_18",
+  "leave_approver",
   "status",
   "salary_slip",
   "sb10",
   "posting_date",
-  "follow_via_email",
-  "color",
-  "column_break_17",
-  "company",
   "letter_head",
+  "color",
+  "follow_via_email",
+  "company",
+  "column_break_17",
+  "branch",
+  "cost_center",
   "amended_from"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "no_copy": 1,
-   "options": "HR-LAP-.YYYY.-",
+   "options": "LAP-.YYYY.-",
    "print_hide": 1,
-   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -147,18 +150,20 @@
   },
   {
    "fieldname": "section_break_7",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "APPROVER DETAILS"
   },
   {
    "fieldname": "leave_approver",
    "fieldtype": "Link",
-   "label": "Leave Approver",
-   "options": "User"
+   "label": "Approver Email ID",
+   "options": "User",
+   "read_only": 1
   },
   {
    "fieldname": "leave_approver_name",
    "fieldtype": "Data",
-   "label": "Leave Approver Name",
+   "label": "Approver Name",
    "read_only": 1
   },
   {
@@ -169,20 +174,24 @@
    "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
    "options": "Open\nApproved\nRejected\nCancelled",
-   "permlevel": 1
+   "permlevel": 1,
+   "read_only": 1
   },
   {
    "fieldname": "sb10",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "ADDITIONAL INFORMATION"
   },
   {
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
+   "hidden": 1,
    "label": "Posting Date",
    "no_copy": 1,
    "reqd": 1
@@ -201,6 +210,7 @@
    "default": "1",
    "fieldname": "follow_via_email",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Follow via Email",
    "print_hide": 1
   },
@@ -211,6 +221,7 @@
   {
    "fieldname": "salary_slip",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Salary Slip",
    "options": "Salary Slip",
    "print_hide": 1
@@ -219,6 +230,7 @@
    "allow_on_submit": 1,
    "fieldname": "letter_head",
    "fieldtype": "Link",
+   "hidden": 1,
    "ignore_user_permissions": 1,
    "label": "Letter Head",
    "options": "Letter Head",
@@ -228,6 +240,7 @@
    "allow_on_submit": 1,
    "fieldname": "color",
    "fieldtype": "Color",
+   "hidden": 1,
    "label": "Color",
    "print_hide": 1
   },
@@ -240,14 +253,34 @@
    "options": "Leave Application",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leave_approver_designation",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Approver Designation",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
- "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "max_attachments": 3,
- "modified": "2020-09-23 19:11:58.806837",
+ "modified": "2020-10-03 20:34:40.648870",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Application",
@@ -307,7 +340,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Leave Approver",
+   "role": "Approver",
    "share": 1,
    "submit": 1,
    "write": 1
@@ -323,7 +356,7 @@
    "permlevel": 1,
    "read": 1,
    "report": 1,
-   "role": "Leave Approver",
+   "role": "Approver",
    "write": 1
   }
  ],
@@ -331,5 +364,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "timeline_field": "employee",
- "title_field": "employee_name"
+ "title_field": "employee_name",
+ "track_changes": 1
 }

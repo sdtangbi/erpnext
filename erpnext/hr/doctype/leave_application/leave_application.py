@@ -12,6 +12,10 @@ from erpnext.hr.doctype.employee.employee import get_holiday_list_for_employee
 from erpnext.buying.doctype.supplier_scorecard.supplier_scorecard import daterange
 from erpnext.hr.doctype.leave_ledger_entry.leave_ledger_entry import create_leave_ledger_entry
 
+from erpnext.hr.doctype.approver_settings.approver_settings import get_final_approver
+from erpnext.hr.hr_custom_functions import get_officiating_employee
+from erpnext.custom_workflow import validate_workflow_states, notify_workflow_states
+
 class LeaveDayBlockedError(frappe.ValidationError): pass
 class OverlapError(frappe.ValidationError): pass
 class AttendanceAlreadyMarkedError(frappe.ValidationError): pass
@@ -19,10 +23,17 @@ class NotAnOptionalHoliday(frappe.ValidationError): pass
 
 from frappe.model.document import Document
 class LeaveApplication(Document):
+
 	def get_feed(self):
 		return _("{0}: From {0} of type {1}").format(self.employee_name, self.leave_type)
 
 	def validate(self):
+		''' Ver.20200921 Begins, by SHIV '''
+		# Following code added by SHIV on 2020/09/21
+		validate_workflow_states(self)
+		self.branch = frappe.db.get_value("Employee", self.employee, "branch")
+		self.cost_center = frappe.db.get_value("Employee", self.employee, "cost_center")
+		''' Ver.20200921 Ends '''
 		set_employee_name(self)
 		self.validate_dates()
 		self.validate_balance_leaves()
@@ -35,11 +46,19 @@ class LeaveApplication(Document):
 		if frappe.db.get_value("Leave Type", self.leave_type, 'is_optional_leave'):
 			self.validate_optional_leave()
 		self.validate_applicable_after()
+		# Following code added by SHIV on 2020/10/03
+		notify_workflow_states(self)
 
 	def on_update(self):
+		# Ver.20201003 Begins by SHIV
+		# Following code commented by SHIV on 2020/10/03
+		'''
 		if self.status == "Open" and self.docstatus < 1:
 			# notify leave approver about creation
 			self.notify_leave_approver()
+		'''
+		pass
+		# Ver.20201003 Ends
 
 	def on_submit(self):
 		if self.status == "Open":
@@ -48,17 +67,41 @@ class LeaveApplication(Document):
 		self.validate_back_dated_application()
 		self.update_attendance()
 
+		# Ver.20201003 Begins by SHIV
+		# Following code commented by SHIV on 2020/10/03
+		'''
 		# notify leave applier about approval
 		self.notify_employee()
+		'''
+		# Following code added by SHIV on 2020/10/03
+		notify_workflow_states(self)
+		# Ver.20201003 Ends
 		self.create_leave_ledger_entry()
 		self.reload()
 
 	def on_cancel(self):
 		self.create_leave_ledger_entry(submit=False)
-		self.db_set("status", "Cancelled")
+		self.status = "Cancelled"
+		# Ver.20201003 Begins by SHIV
+		# Following code commented by SHIV on 2020/10/03
+		'''
 		# notify leave applier about cancellation
 		self.notify_employee()
+		'''
+		# Following code added by SHIV on 2020/10/03
+		notify_workflow_states(self)
+		# Ver.20201003 Ends
 		self.cancel_attendance()
+
+	# Following method introduced by SHIV on 2020/09/19
+	def before_cancel_after_draft(self):
+		self.status = "Cancelled"
+
+	# Following method introduced by SHIV on 2020/09/19
+	def on_cancel_after_draft(self):
+		validate_workflow_states(self)
+		notify_workflow_states(self)
+		self.status = "Cancelled"
 
 	def validate_applicable_after(self):
 		if self.leave_type:
@@ -427,37 +470,21 @@ def get_leave_details(employee, date):
 	leave_allocation = {}
 	for d in allocation_records:
 		allocation = allocation_records.get(d, frappe._dict())
-
-		total_allocated_leaves = frappe.db.get_value('Leave Allocation', {
-			'from_date': ('<=', date),
-			'to_date': ('>=', date),
-			'leave_type': allocation.leave_type,
-			'employee': employee,
-			'docstatus': 1
-		}, 'SUM(total_leaves_allocated)') or 0
-
 		remaining_leaves = get_leave_balance_on(employee, d, date, to_date = allocation.to_date,
 			consider_all_leaves_in_the_allocation_period=True)
-
 		end_date = allocation.to_date
 		leaves_taken = get_leaves_for_period(employee, d, allocation.from_date, end_date) * -1
 		leaves_pending = get_pending_leaves_for_period(employee, d, allocation.from_date, end_date)
 
 		leave_allocation[d] = {
-			"total_leaves": total_allocated_leaves,
-			"expired_leaves": max(total_allocated_leaves - (remaining_leaves + leaves_taken), 0),
+			"total_leaves": allocation.total_leaves_allocated,
 			"leaves_taken": leaves_taken,
 			"pending_leaves": leaves_pending,
 			"remaining_leaves": remaining_leaves}
 
-	#is used in set query
-	lwps = frappe.get_list("Leave Type", filters = {"is_lwp": 1})
-	lwps = [lwp.name for lwp in lwps]
-
 	ret = {
 		'leave_allocation': leave_allocation,
-		'leave_approver': get_leave_approver(employee),
-		'lwps': lwps
+		'leave_approver': get_leave_approver(employee)
 	}
 
 	return ret
@@ -502,7 +529,7 @@ def get_leave_allocation_records(employee, date, leave_type=None):
 			from_date <= %(date)s
 			AND to_date >= %(date)s
 			AND docstatus=1
-			AND transaction_type="Leave Allocation"
+			AND transaction_type in ("Leave Allocation", "Merge CL To EL")
 			AND employee=%(employee)s
 			AND is_expired=0
 			AND is_lwp=0
@@ -603,7 +630,7 @@ def get_leave_entries(employee, leave_type, from_date, to_date):
 			is_carry_forward, is_expired
 		FROM `tabLeave Ledger Entry`
 		WHERE employee=%(employee)s AND leave_type=%(leave_type)s
-			AND docstatus=1
+			AND docstatus=1 
 			AND (leaves<0
 				OR is_expired=1)
 			AND (from_date between %(from_date)s AND %(to_date)s
@@ -797,3 +824,66 @@ def get_leave_approver(employee):
 			'parentfield': 'leave_approvers', 'idx': 1}, 'approver')
 
 	return leave_approver
+
+# Following method copied from NRDCL by SHIV on 2020/09/21
+@frappe.whitelist()
+def get_approvers(doctype=None, txt=None, searchfield=None, start=None, page_len=None, filters=None):
+	app_list = []
+	if not filters.get("employee"):
+		frappe.throw(_("Please select Employee Record first."))
+
+	employee_user = frappe.get_value("Employee", filters.get("employee"), "user_id")
+
+	approver = frappe.get_value("Employee", filters.get("employee"), "reports_to")
+	approver_id = frappe.get_value("Employee", approver, "user_id")
+	if not approver:
+		frappe.throw("Set Reports To Field in Employee")
+	app_list.append(str(approver_id))
+
+	"""d = frappe.db.get_value("DepartmentDirector", {"department": frappe.get_value("Employee", filters.get("employee"), "department")}, "director")
+	if d:
+		app_list.append(str(d))
+	ceo = frappe.db.get_value("Employee", {"employee_subgroup": "CEO", "status": "Active"}, "user_id")
+	if ceo:
+		app_list.append(str(ceo))
+	"""
+	#Check for Officiating Employeee, if so, replace
+	for a, b in enumerate(app_list):
+		off = get_officiating_employee(frappe.db.get_value("Employee", {"user_id": app_list[a]}, "name"))
+		#off = frappe.db.sql("select officiate from `tabOfficiating Employee` where docstatus = 1 and revoked != 1 and %(today)s between from_date and to_date and employee = %(employee)s order by creation desc limit 1", {"today": nowdate(), "employee": frappe.db.get_value("Employee", {"user_id": app_list[a]}, "name")}, as_dict=True)
+		if off:
+			app_list[a] = str(frappe.db.get_value("Employee", off[0].officiate, "user_id"))
+	
+	approvers = ""
+	for a in app_list:
+		approvers += "\'"+str(a)+"\',"
+	approvers += "\'dshfghasfgqyegfheqkhjf\'"
+
+	query = "select emp.user_id, emp.employee_name, emp.designation from tabEmployee emp where emp.user_id in (" + str(approvers) + ")"
+	lists = frappe.db.sql(query)
+
+	if lists:
+		return lists
+	else:
+		frappe.throw("Set \'Reports To\' field for employee " + str(filters.get("employee")))
+
+# Following code added by SHIV on 2020/09/21
+def get_permission_query_conditions(user):
+	if not user: user = frappe.session.user
+	user_roles = frappe.get_roles(user)
+
+	if user == "Administrator":
+		return
+	if "HR User" in user_roles or "HR Manager" in user_roles:
+		return
+
+	return """(
+		`tabLeave Application`.owner = '{user}'
+		or
+		exists(select 1
+				from `tabEmployee`
+				where `tabEmployee`.name = `tabLeave Application`.employee
+				and `tabEmployee`.user_id = '{user}')
+		or
+		(`tabLeave Application`.leave_approver = '{user}' and `tabLeave Application`.workflow_state != 'Draft')
+	)""".format(user=user)

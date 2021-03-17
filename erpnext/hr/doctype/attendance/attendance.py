@@ -39,7 +39,8 @@ class Attendance(Document):
 
 		# leaves can be marked for future dates
 		if self.status != 'On Leave' and not self.leave_application and getdate(self.attendance_date) > getdate(nowdate()):
-			frappe.throw(_("Attendance can not be marked for future dates"))
+			if self.status != "Tour":
+				frappe.throw(_("Attendance can not be marked for future dates"))
 		elif date_of_joining and getdate(self.attendance_date) < getdate(date_of_joining):
 			frappe.throw(_("Attendance date can not be less than employee's joining date"))
 
@@ -51,7 +52,7 @@ class Attendance(Document):
 
 	def validate(self):
 		from erpnext.controllers.status_updater import validate_status
-		validate_status(self.status, ["Present", "Absent", "On Leave", "Half Day"])
+		validate_status(self.status, ["Present", "Absent", "On Leave", "Half Day", "Tour"])
 		self.validate_attendance_date()
 		self.validate_duplicate_record()
 		self.check_leave_record()
@@ -82,8 +83,7 @@ def add_attendance(events, start, end, conditions=None):
 		e = {
 			"name": d.name,
 			"doctype": "Attendance",
-			"start": d.attendance_date,
-			"end": d.attendance_date,
+			"date": d.attendance_date,
 			"title": cstr(d.status),
 			"docstatus": d.docstatus
 		}

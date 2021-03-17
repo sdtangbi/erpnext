@@ -1,0 +1,57 @@
+{
+ "autoname": "ETI.#####",
+ "creation": "2021-03-11 09:43:56.591098",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "target",
+  "quantityquality",
+  "evaluate_target_weightage",
+  "evaluate_target_self_rating",
+  "evaluate_target_supervisor_rating"
+ ],
+ "fields": [
+  {
+   "fieldname": "quantityquality",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Quantity/Quality"
+  },
+  {
+   "fieldname": "evaluate_target_weightage",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Weightage"
+  },
+  {
+   "fieldname": "evaluate_target_self_rating",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Self Rating"
+  },
+  {
+   "fieldname": "evaluate_target_supervisor_rating",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Supervisor Rating"
+  },
+  {
+   "fieldname": "target",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Performance Target"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-03-11 12:04:37.354154",
+ "modified_by": "Administrator",
+ "module": "PMS",
+ "name": "Evaluate Target Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,259 @@
+{
+ "autoname": "REV.#####",
+ "creation": "2021-03-09 10:20:42.851171",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "position_title",
+  "name_of_supervisor",
+  "supervisor_name",
+  "pms_group",
+  "required_to_set_target",
+  "grade",
+  "column_break_2",
+  "old_employee_id",
+  "employee_name",
+  "department",
+  "division",
+  "date",
+  "pms_calendar_section",
+  "pms_calendar",
+  "start_date",
+  "column_break_16",
+  "end_date",
+  "section_break_12",
+  "part_a_section",
+  "review_target_item",
+  "part_b_section",
+  "review_competency_item",
+  "part_c_section",
+  "additional_items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee ID",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "position_title",
+   "fieldtype": "Link",
+   "label": "Designation",
+   "options": "Designation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.reports_to",
+   "fieldname": "name_of_supervisor",
+   "fieldtype": "Link",
+   "label": "Name of Supervisor/Reporting Authority",
+   "options": "Employee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.pms_group",
+   "fieldname": "pms_group",
+   "fieldtype": "Link",
+   "label": "PMS Group",
+   "options": "PMS Group",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "employee.division",
+   "fieldname": "division",
+   "fieldtype": "Link",
+   "label": "Division/Unit/Branch",
+   "options": "Division",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.grade",
+   "fieldname": "grade",
+   "fieldtype": "Link",
+   "label": "Grade",
+   "options": "Employee Grade",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Read Only",
+   "label": "Date"
+  },
+  {
+   "fieldname": "part_b_section",
+   "fieldtype": "Section Break",
+   "label": "Part B: Review of core competencies"
+  },
+  {
+   "fetch_from": "employee.old_employee_id",
+   "fieldname": "old_employee_id",
+   "fieldtype": "Read Only",
+   "label": "Old Employee ID"
+  },
+  {
+   "depends_on": "eval:doc.required_to_set_target == 1",
+   "fieldname": "part_a_section",
+   "fieldtype": "Section Break",
+   "label": "Part A : Review of planned performance targets(not applicable to grades A2 and below)"
+  },
+  {
+   "fieldname": "part_c_section",
+   "fieldtype": "Section Break",
+   "label": "Part C: Review on achievements by the appraisee which were not planned"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Review",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_target_item",
+   "fieldtype": "Table",
+   "label": "Review Target Item",
+   "options": "Review Target Item",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "pms_group.required_to_set_target",
+   "fieldname": "required_to_set_target",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Require to set target",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pms_calendar_section",
+   "fieldtype": "Section Break",
+   "label": "PMS Calendar"
+  },
+  {
+   "fieldname": "pms_calendar",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "PMS Calendar",
+   "options": "PMS Calendar",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "pms_calendar.review_start_date",
+   "fieldname": "start_date",
+   "fieldtype": "Read Only",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "pms_calendar.review_end_date",
+   "fieldname": "end_date",
+   "fieldtype": "Read Only",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "additional_items",
+   "fieldtype": "Table",
+   "label": "Additional Achievements",
+   "options": "Additional Achievements"
+  },
+  {
+   "fieldname": "review_competency_item",
+   "fieldtype": "Table",
+   "label": "Review competency",
+   "options": "Review Competency Item"
+  },
+  {
+   "fetch_from": "employee.reports_to_name",
+   "fieldname": "supervisor_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Supervisor Name",
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2021-03-11 14:58:24.878709",
+ "modified_by": "Administrator",
+ "module": "PMS",
+ "name": "Review",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
