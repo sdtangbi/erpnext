@@ -57,7 +57,7 @@ body[data-route="pos"] .pos-bill-toolbar {
 }
 body[data-route="pos"] .pos-bill-item:hover,
 body[data-route="pos"] .list-customers-table > .pos-list-row:hover {
-  background-color: #f5f7fa;
+  background-color: #0661e9;
   cursor: pointer;
 }
 body[data-route="pos"] .pos-item-qty {
